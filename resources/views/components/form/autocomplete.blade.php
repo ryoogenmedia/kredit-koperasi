@@ -5,6 +5,7 @@
         </div>
 
         {{ $slot }}
+
     </div>
 
     <button wire:click="hideAutocomplete" type="button" class="btn btn-sm position-absolute mt-2 me-2 float-end"

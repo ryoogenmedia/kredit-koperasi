@@ -2,7 +2,6 @@
     <x-slot name="title">Pengaturan Akun</x-slot>
 
     <x-slot name="pageTitle">Pengaturan Akun</x-slot>
-
     <x-slot name="pagePretitle">Pengaturan</x-slot>
 
     <div class="row row-cards">

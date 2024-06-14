@@ -10,9 +10,11 @@
 
             <x-slot name="button">
                 {{ $button ?? '' }}
+
             </x-slot>
 
             {{ $slot }}
+
         </x-backend.content>
     </div>
 

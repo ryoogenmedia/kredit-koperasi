@@ -11,6 +11,15 @@ return [
     ],
 
     [
+        'title' => 'Pengguna',
+        'icon' => 'user',
+        'route-name' => 'pengguna.index',
+        'is-active' => 'pengguna*',
+        'description' => 'Untuk kelola data pengguna aplikasi.',
+        'roles' => ['admin'],
+    ],
+
+    [
         'title' => 'Pengaturan',
         'description' => 'Menampilkan pengaturan aplikasi.',
         'icon' => 'cog',
