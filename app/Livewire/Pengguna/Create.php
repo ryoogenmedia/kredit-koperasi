@@ -13,7 +13,7 @@ use Livewire\Component;
 
 class Create extends Component
 {
-    use WithFileUploads;
+     use WithFileUploads;
 
     public $username;
     public $email;
