@@ -31,9 +31,7 @@ Route::middleware('auth', 'verified', 'force.logout')->namespace('App\Livewire')
 
 
     Route::namespace('Nasabah')->prefix('nasabah')->name('nasabah.')->group(function () {
-            Route::get('/', Index::class)->name('index');
-            Route::get('/tambah', Create::class)->name('create');
-            Route::get('/sunting/{id}', Edit::class)->name('edit');
+        Route::get('/', Index::class)->name('index');
     });
 
     /**

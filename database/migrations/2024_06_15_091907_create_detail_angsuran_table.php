@@ -13,9 +13,10 @@ return new class extends Migration
     {
          Schema::create('detail_angsuran', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_detail_pinjaman');
-            $table->integer('jumlah_angsur');
-            $table->string('keterangan_angsur');
+            $table->foreignId('angsuran_id');
+            $table->foreignId('detail_pinjaman_id');
+            $table->string('amount_installments');
+            $table->text('note');
             $table->timestamps();
         });
     }

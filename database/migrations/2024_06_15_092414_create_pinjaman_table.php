@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-         Schema::create('pinjaman', function (Blueprint $table) {
+        Schema::create('pinjaman', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_nasabah')->nullable();
-            $table->integer('jumlah_pinjaman')->nullable();
-            $table->integer('bunga')->nullable();
-            $table->date('tgl_pinjaman')->nullable();
-            $table->integer('jumlah_angsur')->nullable();
-            $table->integer('total_angsur')->nullable();
+            $table->foreignId('nasabah_id')->nullable();
+            $table->string('amount')->nullable();
+            $table->string('interest')->nullable();
+            $table->string('date')->nullable();
+            $table->string('installments')->nullable();
+            $table->string('amount_installments')->nullable();
             $table->timestamps();
         });
     }

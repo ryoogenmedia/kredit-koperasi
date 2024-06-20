@@ -10,14 +10,26 @@ class Pinjaman extends Model
 
 use HasFactory;
 
-protected $table = "pinjaman";
-protected $fillable = [
-'id_nasabah',
-'jumlah_pinjaman',
-'bunga',
-'tgl_pinjaman',
-'jumlah_angsur',
-'total_angsur',
-];
+    protected $table = "pinjaman";
 
+    protected $fillable = [
+        'nasabah_id',
+        'amount',
+        'interest',
+        'date',
+        'installments',
+        'amount_installments',
+    ];
+
+    protected $casts = [
+        'nasabah_id' => 'integer',
+        'amount' => 'integer',
+        'date' => 'datetime',
+        'installments' => 'integer',
+        'amount_installments' => 'integer',
+    ];
+
+    public function nasabah(){
+        return $this->belongsTo(Nasabah::class,'nasabah_id','id')->withDefault();
+    }
 }

@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-         Schema::create('angsuran', function (Blueprint $table) {
+        Schema::create('angsuran', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_nasabah')->nullable();
-            $table->foreignId('id_pinjaman')->nullable();
-            $table->date('tgl_angsuran')->nullable();
-            $table->integer('angsur_ke')->nullable();
-            $table->integer('sisa_angsur')->nullable();
-            $table->integer('sisa_pinjam')->nullable();
-            $table->string('bukti_angsur')->nullable();
+            $table->foreignId('pinjaman_id')->nullable();
+            $table->foreignId('nasabah_id')->nullable();
+            $table->string('date_installments')->nullable();
+            $table->string('installments_to')->nullable();
+            $table->string('remaining_installments')->nullable();
+            $table->string('remaining_loan')->nullable();
+            $table->string('proof')->nullable();
             $table->timestamps();
         });
     }

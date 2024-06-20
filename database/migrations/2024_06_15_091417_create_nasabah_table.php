@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-         Schema::create('nasabah', function (Blueprint $table) {
+        Schema::create('nasabah', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable();
-            $table->integer('no_ktp')->nullable()->unique();
-            $table->string('nama_nasabah')->nullable();
-            $table->text('alamat')->nullable();
-            $table->integer('umur')->nullable();
-            $table->string('no_telp')->nullable();
+            $table->string('number_identity')->nullable()->unique();
+            $table->string('name')->nullable();
+            $table->string('job')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('age')->nullable();
+            $table->string('email')->nullable()->unique();
+            $table->text('address')->nullable();
             $table->timestamps();
         });
     }

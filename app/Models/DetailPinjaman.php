@@ -7,16 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class DetailPinjaman extends Model
 {
-use HasFactory;
-protected $table = "detail_pinjaman";
-protected $fillable = [
-   'id_nasabah',
-   'tgl_pengajuan_pinjaman',
-   'tgl_acc_pinjaman',
-   'tgl_pelunasan',
-   'sisa_pinjaman',
-   'bunga_pinjaman',
-   'keterangan_pinjaman',
-];
+    use HasFactory;
 
+    protected $table = "detail_pinjaman";
+
+    protected $fillable = [
+        'pinjaman_id',
+        'date_submission_loan',
+        'date_acc_loan',
+        'remaining_loan',
+        'note',
+    ];
+
+    public function pinjaman(){
+        return $this->belongsTo(Pinjaman::class,'pinjaman_id','id')->withDefault();
+    }
 }

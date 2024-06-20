@@ -1,13 +1,9 @@
 <div>
-        <x-slot name="title">Data nasabah</x-slot>
+        <x-slot name="title">Data Nasabah</x-slot>
 
-        <x-slot name="pagePretitle">Daftar Data nasabah</x-slot>
+        <x-slot name="pagePretitle">Daftar Data Nasabah</x-slot>
 
-        <x-slot name="pageTitle">Data nasabah</x-slot>
-
-        <x-slot name="button">
-        <x-datatable.button.add name="Tambah nasabah" :route="route('nasabah.create')" />
-    </x-slot>
+        <x-slot name="pageTitle">Data Nasabah</x-slot>
 
     <x-alert />
 
@@ -46,20 +42,23 @@
                         </th>
 
                         <th>
-                            <x-datatable.column-sort name="Akun" wire:click="sortBy('name')" :direction="$sorts['name'] ?? null" />
+                            <x-datatable.column-sort name="Nasabah" wire:click="sortBy('name')" :direction="$sorts['name'] ?? null" />
                         </th>
 
                         <th>
-                            <x-datatable.column-sort name="Email" wire:click="sortBy('email')" :direction="$sorts['email'] ?? null" />
+                            <x-datatable.column-sort name="NO KTP" wire:click="sortBy('number_identity')" :direction="$sorts['number_identity'] ?? null" />
                         </th>
 
                         <th>
-                            <x-datatable.column-sort name="Peran Akun" wire:click="sortBy('roles')"
-                                :direction="$sorts['roles'] ?? null" />
+                            <x-datatable.column-sort name="Alamat" wire:click="sortBy('address')" :direction="$sorts['address'] ?? null" />
                         </th>
 
                         <th>
-                            <x-datatable.column-sort name="Status" wire:click="sortBy('email_verified_at')" :direction="$sorts['email_verified_at'] ?? null" />
+                            <x-datatable.column-sort name="Pekerjaan" wire:click="sortBy('job')" :direction="$sorts['job'] ?? null" />
+                        </th>
+
+                        <th>
+                            <x-datatable.column-sort name="Umur" wire:click="sortBy('age')" :direction="$sorts['age'] ?? null" />
                         </th>
 
                         <th></th>
@@ -72,16 +71,16 @@
                             <td colspan="10" class="bg-red-lt">
                                 @if (!$selectAll)
                                     <div class="text-red">
-                                        <span>Anda telah memilih <strong>{{ $this->rows->total() }}</strong> user,
+                                        <span>Anda telah memilih <strong>{{ $this->rows->total() }}</strong> nasabah,
                                             apakah
                                             Anda mau memilih semua <strong>{{ $this->rows->total() }}</strong>
-                                            user?</span>
+                                            nasabah?</span>
 
                                         <button wire:click="selectedAll" class="btn ms-2">Pilih Semua</button>
                                     </div>
                                 @else
                                     <span class="text-pink">Anda sekarang memilih semua
-                                        <strong>{{ count($this->selected) }}</strong> user.
+                                        <strong>{{ count($this->selected) }}</strong> nasabah.
                                     </span>
                                 @endif
                             </td>
@@ -95,34 +94,27 @@
                             </td>
 
                             <td>
-                                <div class="d-flex align-items-center">
-                                    <span class="avatar avatar-sm"
-                                        style="background-image: url({{ $row->avatarUrl() }})"></span>
-
-                                    <span class="ms-2">{{ $row->username }}</span>
+                                <div class="d-flex flex-column">
+                                    <div class="ms-2">{{ $row->name }}</div>
+                                    <div class="ms-2">{{ $row->email }}</div>
+                                    <div class="ms-2">{{ $row->phone }}</div>
                                 </div>
                             </td>
 
-                            <td>{{ $row->email ?? '-' }}</td>
+                            <td>{{ $row->number_identity ?? '-' }}</td>
 
-                            <td>
-                                <span class="badge bg-{{ $row->roles == 'admin' ? 'green' : 'blue' }}-lt">
-                                    {{ $row->roles == 'user' ? 'Nasabah' : $row->roles }}
-                                </span>
-                            </td>
+                            <td>{{ $row->address ?? '-' }}</td>
 
-                            <td>
-                                <span class="badge bg-{{ $row->email_verified_at ? 'lime' : 'red' }}-lt">
-                                    {{ $row->email_verified_at ? 'aktif' : 'nonaktif' }}
-                                </span>
-                            </td>
+                            <td>{{ $row->job ?? '-' }}</td>
+
+                            <td>{{ $row->age ?? '-' }}</td>
 
                             <td>
                                 <div class="d-flex">
                                     <div class="ms-auto">
-                                        <a class="btn btn-sm" href="{{ route('nasabah.edit', $row->id) }}">
-                                            Sunting
-                                        </a>
+                                        <button class="btn btn bg-success-lt">
+                                            Verifikasi
+                                        </button>
                                     </div>
                                 </div>
                             </td>

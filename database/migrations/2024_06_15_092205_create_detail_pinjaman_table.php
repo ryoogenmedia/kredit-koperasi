@@ -13,13 +13,11 @@ return new class extends Migration
     {
           Schema::create('detail_pinjaman', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_nasabah')->nullable();
-            $table->date('tgl_pengajuan_pinjaman')->nullable();
-            $table->date('tgl_acc_pinjaman')->nullable();
-            $table->date('tgl_pelunasan')->nullable();
-            $table->integer('sisa_pinjaman')->nullable();
-            $table->integer('bunga_pinjaman')->nullable();
-            $table->integer('keterangan_pinjaman')->nullable();
+            $table->foreignId('pinjaman_id')->nullable();
+            $table->string('date_submission_loan')->nullable();
+            $table->string('date_acc_loan')->nullable();
+            $table->string('remaining_loan')->nullable();
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }

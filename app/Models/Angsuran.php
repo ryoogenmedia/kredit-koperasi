@@ -7,16 +7,38 @@ use Illuminate\Database\Eloquent\Model;
 
 class Angsuran extends Model
 {
- use HasFactory;
+    use HasFactory;
 
- protected $table = "angsuran";
- protected $fillable = [
-    'id_pinjaman',
-    'tgl_angsuran',
-    'angsur_ke',
-    'sisa_angsur',
-    'sisa_pinjam',
-    'bukti_angsur',
- ];
+    protected $table = "angsuran";
 
+    protected $fillable = [
+        'pinjaman_id',
+        'nasabah_id',
+        'date_installments',
+        'installments_to',
+        'remaining_installments',
+        'remaining_loan',
+        'proof',
+    ];
+
+    protected $casts = [
+        'pinjaman_id' => 'integer',
+        'nasabah_id' => 'integer',
+        'date_installments' => 'datetime',
+        'remaining_installments' => 'integer',
+        'remaining_loan' => 'integer',
+        'proof' => 'string'
+    ];
+
+    public function pinjaman(){
+        return $this->belongsTo(Pinjaman::class,'pinjaman_id','id')->withDefault();
+    }
+
+    public function nasabah(){
+        return $this->belongsTo(Nasabah::class,'nasabah_id','id')->withDefault();
+    }
+
+    public function detail(){
+        return $this->hasOne(DetailAngsuran::class,'angsuran_id','id')->withDefault();
+    }
 }
