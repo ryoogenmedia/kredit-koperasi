@@ -22,16 +22,21 @@ Route::middleware('auth', 'verified', 'force.logout')->namespace('App\Livewire')
     Route::get('beranda', Home\Index::class)->name('home')
         ->middleware('roles:admin,user,operator');
 
-
+    /**
+     * User / Pengguna
+     */
     Route::namespace('Pengguna')->prefix('pengguna')->name('pengguna.')->group(function () {
             Route::get('/', Index::class)->name('index');
             Route::get('/tambah', Create::class)->name('create');
             Route::get('/sunting/{id}', Edit::class)->name('edit');
     });
 
-
+    /**
+     * Nasabah
+     */
     Route::namespace('Nasabah')->prefix('nasabah')->name('nasabah.')->group(function () {
         Route::get('/', Index::class)->name('index');
+        Route::get('/verfikasi', Verification::class)->name('verfication');
     });
 
     /**

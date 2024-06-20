@@ -21,6 +21,7 @@ class Nasabah extends Model
         'phone',
         'age',
         'email',
+        'status_verfication',
     ];
 
     protected $casts = [
@@ -31,6 +32,7 @@ class Nasabah extends Model
         'phone' => 'integer',
         'age' => 'integer',
         'email' => 'string',
+        'status_verfication' => 'boolean',
     ];
 
     public function pinjaman(){

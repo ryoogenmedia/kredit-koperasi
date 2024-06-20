@@ -1,9 +1,9 @@
 <div>
-    <x-slot name="title">Data Nasabah</x-slot>
+    <x-slot name="title">Data Verfikasi Nasabah</x-slot>
 
-    <x-slot name="pagePretitle">Daftar Data Nasabah</x-slot>
+    <x-slot name="pagePretitle">Daftar Data Verifikasi Nasabah</x-slot>
 
-    <x-slot name="pageTitle">Data Nasabah</x-slot>
+    <x-slot name="pageTitle">Data Verifikasi Nasabah</x-slot>
 
     <x-alert />
 
@@ -118,6 +118,16 @@
                                             class="btn btn bg-{{ !$row->status_verification ? 'success' : 'orange' }}-lt w-100"
                                         >
                                             {{ !$row->status_verification ? 'Verifikasi' : 'Batalkan Verifikasi' }}
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex mt-2">
+                                    <div style="width: 150px"class="ms-auto">
+                                        <button
+                                            class="btn btn bg-success-lt w-100"
+                                        >
+                                            Setujui Pinjaman
                                         </button>
                                     </div>
                                 </div>

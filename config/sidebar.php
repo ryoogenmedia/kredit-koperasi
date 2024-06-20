@@ -12,12 +12,27 @@ return [
 
     [
         'title' => 'Nasabah',
+        'description' => 'daftar data nasabah',
         'icon' => 'user-tie',
         'route-name' => 'nasabah.index',
         'is-active' => 'nasabah*',
-        'description' => 'Untuk kelola data nasabah aplikasi.',
         'roles' => ['admin'],
+        'sub-menus' => [
+            [
+                'title' => 'Data',
+                'description' => 'Melihat daftar nasabah.',
+                'route-name' => 'nasabah.index',
+                'is-active' => 'nasabah.index',
+            ],
+            [
+                'title' => 'Verfikasi Nasabah',
+                'description' => 'Melihat daftar verfikasi nasabah.',
+                'route-name' => 'nasabah.verfication',
+                'is-active' => 'setting.verfication',
+            ],
+        ],
     ],
+
     [
         'title' => 'Pengguna',
         'icon' => 'user',

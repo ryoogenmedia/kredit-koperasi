@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('age')->nullable();
             $table->string('email')->nullable()->unique();
             $table->text('address')->nullable();
+            $table->boolean('status_verification')->default(false);
             $table->timestamps();
         });
     }

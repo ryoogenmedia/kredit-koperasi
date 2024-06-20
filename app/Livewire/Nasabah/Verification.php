@@ -11,7 +11,7 @@ use Livewire\Attributes\Computed;
 
 use Livewire\Component;
 
-class Index extends Component
+class Verification extends Component
 {
     use WithBulkActions;
     use WithPerPagePagination;
@@ -50,7 +50,7 @@ class Index extends Component
         session()->flash('alert', [
             'type' => 'success',
             'message' => 'Berhasil.',
-            'detail' => "nasabah $nasabah->name berhasil di verfikasi.",
+            'detail' => "verfikasi nasabah $nasabah->name berhasil di batalkan.",
         ]);
     }
 
@@ -60,8 +60,8 @@ class Index extends Component
         $query = Nasabah::query()
             ->when(!$this->sorts, fn ($query) => $query->first())
             ->when($this->filters['search'], function ($query, $search) {
-                $query->where('status_verification',false)->whereAny(['username','roles','email'], 'LIKE', "%$search%");
-            })->where('status_verification',false);
+                $query->where('status_verification',true)->whereAny(['username','roles','email'], 'LIKE', "%$search%");
+            })->where('status_verification', true);
 
         return $this->applyPagination($query);
     }
@@ -84,6 +84,6 @@ class Index extends Component
 
     public function render()
     {
-        return view('livewire.nasabah.index');
+        return view('livewire.nasabah.verification');
     }
 }
