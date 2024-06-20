@@ -7,8 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Angsuran extends Model
 {
-    use HasFactory;
-    protected $table = "angsuran";
+ use HasFactory;
 
+ protected $table = "angsuran";
+ protected $fillable = [
+    'id_pinjaman',
+    'tgl_angsuran',
+    'angsur_ke',
+    'sisa_angsur',
+    'sisa_pinjam',
+    'bukti_angsur',
+ ];
 
 }
