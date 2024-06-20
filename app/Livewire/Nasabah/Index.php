@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Livewire\Pengguna;
+namespace App\Livewire\Nasabah;
 
 use App\Livewire\Traits\DataTable\WithBulkActions;
 use App\Livewire\Traits\DataTable\WithCachedRows;
 use App\Livewire\Traits\DataTable\WithPerPagePagination;
 use App\Livewire\Traits\DataTable\WithSorting;
-use App\Models\User;
-use Illuminate\Support\Facades\File;
+use App\Models\Nasabah;
 use Livewire\Attributes\Computed;
-use Livewire\Component;
 
+use Livewire\Component;
 
 class Index extends Component
 {
@@ -25,13 +24,10 @@ class Index extends Component
 
     public function deleteSelected()
     {
-        $users = User::whereIn('id', $this->selected)->get();
-        $deleteCount = $users->count();
+        $nasabah = Nasabah::whereIn('id', $this->selected)->get();
+        $deleteCount = $nasabah->count();
 
-        foreach ($users as $data) {
-            if ($data->avatar) {
-                File::delete(public_path('storage/' . $data->avatar));
-            }
+        foreach ($nasabah as $data) {
             $data->delete();
         }
 
@@ -40,16 +36,16 @@ class Index extends Component
         session()->flash('alert', [
             'type' => 'success',
             'message' => 'Berhasil.',
-            'detail' => "$deleteCount data pengguna berhasil dihapus.",
+            'detail' => "$deleteCount data nasabah berhasil dihapus.",
         ]);
 
-        return redirect()->route('pengguna.index');
+        return redirect()->route('nasabah.index');
     }
 
     #[Computed()]
     public function rows()
     {
-        $query = User::query()
+        $query = Nasabah::query()
             ->when(!$this->sorts, fn ($query) => $query->first())
             ->when($this->filters['search'], function ($query, $search) {
                 $query->whereAny(['username','roles','email'], 'LIKE', "%$search%");
@@ -61,7 +57,7 @@ class Index extends Component
     #[Computed()]
     public function allData()
     {
-        return User::all();
+        return Nasabah::all();
     }
 
     public function updatedFilters()
@@ -76,6 +72,6 @@ class Index extends Component
 
     public function render()
     {
-        return view('livewire.pengguna.index');
+        return view('livewire.nasabah.index');
     }
 }

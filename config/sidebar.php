@@ -11,6 +11,14 @@ return [
     ],
 
     [
+        'title' => 'Nasabah',
+        'icon' => 'user-tie',
+        'route-name' => 'nasabah.index',
+        'is-active' => 'nasabah*',
+        'description' => 'Untuk kelola data nasabah aplikasi.',
+        'roles' => ['admin'],
+    ],
+    [
         'title' => 'Pengguna',
         'icon' => 'user',
         'route-name' => 'pengguna.index',

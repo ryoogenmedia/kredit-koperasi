@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Pengguna;
 
+use App\Models\Nasabah;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +19,13 @@ class Create extends Component
     public $email;
     public $password;
     public $avatar;
-    public $roles = 'admin';
+    public $roles;
+
+    public $nomorKTP;
+    public $namaNasabah;
+    public $umurNasabah;
+    public $nomorPonsel;
+    public $alamat;
 
     public function validateData(){
         $this->validate([
@@ -28,6 +35,16 @@ class Create extends Component
             'password' => ['required', 'string', Password::default()],
             'avatar' => ['nullable', 'image', 'max:2048'],
         ]);
+
+        if($this->roles == 'user'){
+            $this->validate([
+            'nomorKTP' => ['required', 'min:2' , 'max:255',  'string'],
+            'namaNasabah' => ['required', 'min:2', 'max:255', 'string'],
+            'umurNasabah' => ['required', 'min:2', 'max:255','string'],
+            'nomorPonsel' => ['required', 'min:2', 'max:255','string'],
+            'alamat' => ['required', 'min:5', 'string'],
+            ]);
+        }
     }
 
     public function save()
@@ -48,6 +65,17 @@ class Create extends Component
             if ($this->avatar) {
                 $user->update([
                     'avatar' => $this->avatar->store('avatars', 'public'),
+                ]);
+            }
+
+            if($this->roles == 'user'){
+                Nasabah::create([
+                'user_id' => $user->id,
+                'no_ktp'  => $this->nomorPonsel,
+                'nama_nasabah' => $this->namaNasabah,
+                'alamat'  => $this->alamat,
+                'umur'    => $this->umurNasabah,
+                'no_telp' => $this->nomorPonsel,
                 ]);
             }
 

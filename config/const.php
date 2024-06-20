@@ -3,6 +3,7 @@
 return [
     'roles' => [
         'admin',
+        'operator',
         'user',
     ],
 ];

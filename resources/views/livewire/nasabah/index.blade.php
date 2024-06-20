@@ -1,12 +1,12 @@
 <div>
-    <x-slot name="title">Data Pengguna</x-slot>
+    <x-slot name="title">Data nasabah</x-slot>
 
-    <x-slot name="pagePretitle">Daftar Data Pengguna</x-slot>
+    <x-slot name="pagePretitle">Daftar Data nasabah</x-slot>
 
-    <x-slot name="pageTitle">Data Pengguna</x-slot>
+    <x-slot name="pageTitle">Data nasabah</x-slot>
 
     <x-slot name="button">
-        <x-datatable.button.add name="Tambah Pengguna" :route="route('pengguna.create')" />
+        <x-datatable.button.add name="Tambah nasabah" :route="route('nasabah.create')" />
     </x-slot>
 
     <x-alert />
@@ -16,7 +16,7 @@
     <div class="row mb-3 align-items-center justify-content-between">
         <div class="col-12 col-lg-5 d-flex">
             <div>
-                <x-datatable.search placeholder="Cari nama pengguna..." />
+                <x-datatable.search placeholder="Cari nama nasabah..." />
             </div>
         </div>
 
@@ -120,7 +120,7 @@
                             <td>
                                 <div class="d-flex">
                                     <div class="ms-auto">
-                                        <a class="btn btn-sm" href="{{ route('pengguna.edit', $row->id) }}">
+                                        <a class="btn btn-sm" href="{{ route('nasabah.edit', $row->id) }}">
                                             Sunting
                                         </a>
                                     </div>
