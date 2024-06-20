@@ -1,11 +1,11 @@
 <div>
-    <x-slot name="title">Data nasabah</x-slot>
+        <x-slot name="title">Data nasabah</x-slot>
 
-    <x-slot name="pagePretitle">Daftar Data nasabah</x-slot>
+        <x-slot name="pagePretitle">Daftar Data nasabah</x-slot>
 
-    <x-slot name="pageTitle">Data nasabah</x-slot>
+        <x-slot name="pageTitle">Data nasabah</x-slot>
 
-    <x-slot name="button">
+        <x-slot name="button">
         <x-datatable.button.add name="Tambah nasabah" :route="route('nasabah.create')" />
     </x-slot>
 

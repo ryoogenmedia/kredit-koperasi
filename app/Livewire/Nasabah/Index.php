@@ -13,14 +13,14 @@ use Livewire\Component;
 
 class Index extends Component
 {
-    use WithBulkActions;
-    use WithPerPagePagination;
-    use WithCachedRows;
-    use WithSorting;
+        use WithBulkActions;
+        use WithPerPagePagination;
+        use WithCachedRows;
+        use WithSorting;
 
-    public $filters = [
-        'search' => '',
-    ];
+        public $filters = [
+            'search' => '',
+        ];
 
     public function deleteSelected()
     {
