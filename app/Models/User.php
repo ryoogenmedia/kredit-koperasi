@@ -53,4 +53,15 @@ class User extends Authenticatable
             ? url('storage/' . $this->avatar)
             : 'https://gravatar.com/avatar/' . md5(strtolower(trim($this->email))) . '?s=1024';
     }
+
+    public function nasabah(){
+        return $this->hasOne(Nasabah::class, 'user_id','id')->withDefault();
+    }
+
+    // AUTOMATICLY DELETING RELATIONSHIP
+    public function delete(){
+        $this->nasabah->delete();
+
+        parent::delete();
+    }
 }
