@@ -22,7 +22,7 @@ class DetailAngsuran extends Model
         'angsuran_id' => 'integer',
         'detail_pinjaman_id' => 'integer',
         'amount_installments' => 'integer',
-        'note' => 'staring',
+        'note' => 'string',
     ];
 
     public function detailPinjaman(){

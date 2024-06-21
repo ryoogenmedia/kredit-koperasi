@@ -29,7 +29,19 @@ use HasFactory;
         'amount_installments' => 'integer',
     ];
 
+    public function detail(){
+        return $this->hasOne(DetailPinjaman::class, 'pinjaman_id', 'id')->withDefault();
+    }
+
     public function nasabah(){
         return $this->belongsTo(Nasabah::class,'nasabah_id','id')->withDefault();
+    }
+
+    public function angsuran(){
+        return $this->hasMany(Angsuran::class, 'nasabah_id','id');
+    }
+
+    public function latestAngsuran(){
+        return $this->hasOne(Angsuran::class, 'nasabah_id', 'nasabah_id')->latestOfMany();
     }
 }
