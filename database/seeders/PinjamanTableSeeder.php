@@ -18,6 +18,14 @@ class PinjamanTableSeeder extends Seeder
         $pinjaman = [
             [
                 'nasabah_id' => 1,
+                'amount' => 2000000,
+                'interest' => 2,
+                'date' => now(),
+                'installments' => 12,
+                'amount_installments' => 0,
+            ],
+            [
+                'nasabah_id' => 1,
                 'amount' => 5000000,
                 'interest' => 2,
                 'date' => now(),
@@ -37,8 +45,7 @@ class PinjamanTableSeeder extends Seeder
                 ],
                 [
                     'date_submission_loan' => now(),
-                    'date_acc_loan' => now()->addDay(5),
-                    'remaining_loan' => $angsuranLatest->remaining_loan,
+                    'remaining_loan' => $angsuranLatest->remaining_loan ?? null,
                     'note' => "Pinjaman dari bpk/ibu " . $pinjaman->nasabah->name,
                 ]
             );
