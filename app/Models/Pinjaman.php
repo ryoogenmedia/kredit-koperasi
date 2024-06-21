@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Pinjaman extends Model
 {
@@ -38,10 +39,10 @@ use HasFactory;
     }
 
     public function angsuran(){
-        return $this->hasMany(Angsuran::class, 'nasabah_id','id');
+        return $this->hasMany(Angsuran::class, 'pinjaman_id','id');
     }
 
     public function latestAngsuran(){
-        return $this->hasOne(Angsuran::class, 'nasabah_id', 'nasabah_id')->latestOfMany();
+        return $this->hasOne(Angsuran::class, 'pinjaman_id', 'id')->latestOfMany();
     }
 }

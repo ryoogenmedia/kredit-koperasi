@@ -39,7 +39,7 @@ class Verification extends Component
             'detail' => "$deleteCount data nasabah berhasil dihapus.",
         ]);
 
-        return redirect()->route('nasabah.index');
+        return redirect()->route('nasabah.verification');
     }
 
     public function changeVerification($id){
@@ -69,7 +69,7 @@ class Verification extends Component
     #[Computed()]
     public function allData()
     {
-        return Nasabah::all();
+        return Nasabah::where('status_verification', true)->get();
     }
 
     public function updatedFilters()

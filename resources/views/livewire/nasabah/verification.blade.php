@@ -1,8 +1,12 @@
 <div>
     <x-slot name="title">Data Verifikasi Nasabah</x-slot>
+
     <x-slot name="pagePretitle">Daftar Data Verifikasi Nasabah</x-slot>
+
     <x-slot name="pageTitle">Data Verifikasi Nasabah</x-slot>
+
     <x-alert />
+
     <x-modal.delete-confirmation />
 
     <div class="row mb-3 align-items-center justify-content-between">
@@ -17,8 +21,10 @@
 
             <x-datatable.bulk.dropdown>
                 <div class="dropdown-menu dropdown-menu-end">
-                    <button data-bs-toggle="modal" data-bs-target="#delete-confirmation" class="dropdown-item" type="button">
+                    <button data-bs-toggle="modal" data-bs-target="#delete-confirmation" class="dropdown-item"
+                        type="button">
                         <i class="las la-trash me-3"></i>
+
                         <span>Hapus</span>
                     </button>
                 </div>
@@ -62,7 +68,8 @@
                                 @if (!$selectAll)
                                     <div class="text-red">
                                         <span>Anda telah memilih <strong>{{ $this->rows->total() }}</strong> nasabah,
-                                            apakah Anda mau memilih semua <strong>{{ $this->rows->total() }}</strong>
+                                            apakah
+                                            Anda mau memilih semua <strong>{{ $this->rows->total() }}</strong>
                                             nasabah?</span>
 
                                         <button wire:click="selectedAll" class="btn ms-2">Pilih Semua</button>
@@ -77,75 +84,74 @@
                     @endif
 
                     @forelse ($this->rows as $row)
-                        @foreach ($row->pinjaman as $pinjaman)
-                            <tr wire:key="row-{{ $row->id }}-{{ $loop->index }}">
-                                @if ($loop->index === 0)
-                                    <td rowspan="{{ $row->pinjaman->count() }}">
+                        @php
+                            $rowspan = $row->pinjaman->count() > 0 ? $row->pinjaman->count() : 1;
+                        @endphp
+
+                        @foreach ($row->pinjaman as $index => $pinjaman)
+                            <tr wire:key="row-{{ $row->id }}-{{ $index }}">
+                                @if ($index === 0)
+                                    <td rowspan="{{ $rowspan }}">
                                         <x-datatable.bulk.check wire:model.lazy="selected" value="{{ $row->id }}" />
                                     </td>
 
-                                    <td rowspan="{{ $row->pinjaman->count() }}">
+                                    <td rowspan="{{ $rowspan }}">
                                         <div class="d-flex flex-column">
                                             <div class="ms-2">{{ $row->name }}</div>
                                             <div class="ms-2">{{ $row->email }}</div>
                                             <div class="ms-2">{{ $row->phone }}</div>
                                         </div>
                                     </td>
-
-                                    <td style="padding: 15px;">{{ $pinjaman->amount }}</td>
-
-                                    <td class="w-50" style="padding: 15px;">
-                                        <span>%</span>
-                                        <input
-                                            value="{{ $pinjaman->interest }}"
-                                            type="number"
-                                            class="form-control w-66 d-inline ms-2"
-                                        >
-                                    </td>
-
-                                    <td style="padding: 15px;">{{ $pinjaman->installments }}x pembayaran</td>
-
-                                    <td style="padding: 15px;">{{ $pinjaman->date->diffForHumans() }}</td>
-
-                                    <td style="padding: 5px 10px; padding-right: 20px;">
-                                        <div class="d-flex mt-2">
-                                            <div class="ms-auto">
-                                                <button class="btn btn-sm btn bg-success-lt w-100">
-                                                    Setujui Pinjaman
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                @else
-                                    <td style="padding: 15px;">{{ $pinjaman->amount }}</td>
-
-                                    <td class="w-50" style="padding: 15px;">
-                                        <span>%</span>
-                                        <input
-                                            value="{{ $pinjaman->interest }}"
-                                            type="number"
-                                            class="form-control w-66 d-inline ms-2"
-                                        >
-                                    </td>
-
-                                    <td style="padding: 15px;">{{ $pinjaman->installments }}x pembayaran</td>
-
-                                    <td style="padding: 15px;">{{ $pinjaman->date->diffForHumans() }}</td>
-
-                                    <td style="padding: 5px 10px; padding-right: 20px;">
-                                        <div class="d-flex mt-2">
-                                            <div class="ms-auto">
-                                                <button class="btn btn-sm btn bg-success-lt w-100">
-                                                    Setujui Pinjaman
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
                                 @endif
+
+                                <td style="padding: 15px;">{{ $pinjaman->amount }}</td>
+
+                                <td class="w-50" style="padding: 15px;">
+                                    <span>%</span>
+                                    <input
+                                        value="{{ $pinjaman->interest }}"
+                                        type="number"
+                                        class="form-control w-66 d-inline ms-2"
+                                    >
+                                </td>
+
+                                <td style="padding: 15px;">{{ $pinjaman->installments }}x pembayaran</td>
+
+                                <td style="padding: 15px;">{{ $pinjaman->date->diffForHumans() }}</td>
+
+                                <td style="padding: 5px 10px; padding-right: 20px;">
+                                    <div class="d-flex mt-2">
+                                        <div class="ms-auto">
+                                            <button class="btn btn-sm btn bg-success-lt w-100">
+                                                Setujui Pinjaman
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                         @endforeach
+
+                        @if ($row->pinjaman->isEmpty())
+                            <tr>
+                                <td rowspan="1">
+                                    <x-datatable.bulk.check wire:model.lazy="selected" value="{{ $row->id }}" />
+                                </td>
+
+                                <td rowspan="1">
+                                    <div class="d-flex flex-column">
+                                        <div class="ms-2">{{ $row->name }}</div>
+                                        <div class="ms-2">{{ $row->email }}</div>
+                                        <div class="ms-2">{{ $row->phone }}</div>
+                                    </div>
+                                </td>
+
+                                <td colspan="4" style="text-align: center;">
+                                    <em>Tidak ada data pinjaman</em>
+                                </td>
+                            </tr>
+                        @endif
                     @empty
-                        <x-datatable.empty colspan="10" />
+                        <x-datatable.empty colspan="7"/>
                     @endforelse
                 </tbody>
             </table>

@@ -36,7 +36,7 @@ Route::middleware('auth', 'verified', 'force.logout')->namespace('App\Livewire')
      */
     Route::namespace('Nasabah')->prefix('nasabah')->name('nasabah.')->group(function () {
         Route::get('/', Index::class)->name('index');
-        Route::get('/verfikasi', Verification::class)->name('verfication');
+        Route::get('/verfikasi', Verification::class)->name('verification');
     });
 
     /**

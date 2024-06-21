@@ -27,8 +27,8 @@ return [
             [
                 'title' => 'Verfikasi Nasabah',
                 'description' => 'Melihat daftar verfikasi nasabah.',
-                'route-name' => 'nasabah.verfication',
-                'is-active' => 'setting.verfication',
+                'route-name' => 'nasabah.verification',
+                'is-active' => 'setting.verification',
             ],
         ],
     ],

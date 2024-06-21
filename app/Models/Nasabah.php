@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Nasabah extends Model
 {
@@ -41,5 +42,23 @@ class Nasabah extends Model
 
     public function angsuran(){
         return $this->hasMany(Angsuran::class,'nasabah_id','id');
+    }
+
+    // AUTOMATICLY DELETING RELATIONSHIP
+    public function delete()
+    {
+        DB::transaction(function () {
+            $this->angsuran()->each(function ($angsuran) {
+                $angsuran->detail->delete();
+                $angsuran->delete();
+            });
+
+            $this->pinjaman()->each(function ($pinjaman) {
+                $pinjaman->detail->delete();
+                $pinjaman->delete();
+            });
+
+            parent::delete();
+        });
     }
 }
