@@ -6,7 +6,9 @@ use App\Livewire\Traits\DataTable\WithBulkActions;
 use App\Livewire\Traits\DataTable\WithCachedRows;
 use App\Livewire\Traits\DataTable\WithPerPagePagination;
 use App\Livewire\Traits\DataTable\WithSorting;
+use App\Models\DetailPinjaman;
 use App\Models\Nasabah;
+use App\Models\Pinjaman;
 use Livewire\Attributes\Computed;
 
 use Livewire\Component;
@@ -40,6 +42,57 @@ class Verification extends Component
         ]);
 
         return redirect()->route('nasabah.verification');
+    }
+
+    public function changeDetailPinjaman($id){
+        $detailPinjaman = DetailPinjaman::findOrFail($id);
+
+        if(!$detailPinjaman->date_acc_loan || $detailPinjaman->date_acc_loan == null){
+
+            $interest = $detailPinjaman->pinjaman->interest;
+
+            if(!$interest > 0){
+                session()->flash('alert', [
+                    'type' => 'warning',
+                    'message' => 'Bahaya.',
+                    'detail' => "Bunga pinjaman minimal 1%, atur bunga pinjaman terlebih dahulu.",
+                ]);
+
+                return back();
+            }
+
+            $detailPinjaman->update([
+                'date_acc_loan' => now(),
+            ]);
+
+            session()->flash('alert', [
+                'type' => 'success',
+                'message' => 'Berhasil.',
+                'detail' => "Pinjaman nasabah berhasil di setujui.",
+            ]);
+
+            return back();
+        }
+
+        $detailPinjaman->update([
+            'date_acc_loan' => null
+        ]);
+
+        session()->flash('alert', [
+            'type' => 'success',
+            'message' => 'Berhasil.',
+            'detail' => "Pinjaman nasabah berhasil di batalkan.",
+        ]);
+
+        return back();
+    }
+
+    public function changeInterest($id, $value){
+        $pinjaman = Pinjaman::findOrFail($id);
+
+        $pinjaman->update([
+            'interest' => $value,
+        ]);
     }
 
     public function changeVerification($id){

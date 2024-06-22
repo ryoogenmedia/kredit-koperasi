@@ -104,12 +104,16 @@
                                     </td>
                                 @endif
 
-                                <td style="padding: 15px;">{{ $pinjaman->amount }}</td>
+                                <td style="padding: 15px;">
+                                    {{ money_format_idr($pinjaman->amount) }}
+                                    <p><span class="badge bg-{{ $pinjaman->detail->date_acc_loan ? 'success' : 'orange' }}-lt mt-2">{{ $pinjaman->detail->date_acc_loan ? 'di setujui' : 'belum di setujui' }}</span></p>
+                                </td>
 
                                 <td class="w-50" style="padding: 15px;">
                                     <span>%</span>
                                     <input
                                         value="{{ $pinjaman->interest }}"
+                                        wire:change='changeInterest({{ $pinjaman->id }}, $event.target.value)'
                                         type="number"
                                         class="form-control w-66 d-inline ms-2"
                                     >
@@ -120,13 +124,23 @@
                                 <td style="padding: 15px;">{{ $pinjaman->date->diffForHumans() }}</td>
 
                                 <td style="padding: 5px 10px; padding-right: 20px;">
-                                    <div class="d-flex mt-2">
-                                        <div class="ms-auto">
-                                            <button class="btn btn-sm btn bg-success-lt w-100">
-                                                Setujui Pinjaman
-                                            </button>
+                                    @if (!$pinjaman->detail->date_acc_loan)
+                                        <div class="d-flex mt-2">
+                                            <div class="ms-auto">
+                                                <button wire:confirm='Apakah anda yakin ingin menyetujui pinjaman nasabah?' wire:click='changeDetailPinjaman({{ $pinjaman->detail->id }})' class="btn btn-sm btn bg-success-lt w-100">
+                                                    Setujui Pinjaman
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @else
+                                        <div class="d-flex mt-2">
+                                            <div class="ms-auto">
+                                                <button wire:confirm='Apakah anda yakin ingin membatalkan pinjaman nasabah? apa yang anda lakukan akan menghapus seluruh history pinjaman!' wire:click='changeDetailPinjaman({{ $pinjaman->detail->id }})' class="btn btn-sm btn bg-orange-lt w-100">
+                                                    Batalkan Pinjaman
+                                                </button>
+                                            </div>
+                                        </div>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

@@ -26,6 +26,7 @@ use HasFactory;
         'nasabah_id' => 'integer',
         'amount' => 'integer',
         'date' => 'datetime',
+        'interest' => 'integer',
         'installments' => 'integer',
         'amount_installments' => 'integer',
     ];
