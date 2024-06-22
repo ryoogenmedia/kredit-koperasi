@@ -6,4 +6,9 @@ return [
         'operator',
         'user',
     ],
+
+    'status_acc_loan' => [
+        'di setujui',
+        'belum di setujui',
+    ],
 ];

@@ -22,6 +22,11 @@ class Verification extends Component
 
     public $filters = [
         'search' => '',
+        'total_pinjaman' => '',
+        'bunga_pinjaman' => '',
+        'angsuran' => '',
+        'ktp' => '',
+        'status' => '',
     ];
 
     public function deleteSelected()
@@ -112,9 +117,41 @@ class Verification extends Component
     {
         $query = Nasabah::query()
             ->when(!$this->sorts, fn ($query) => $query->first())
+            ->when($this->filters['total_pinjaman'], function($query, $pinjaman){
+                $query->whereHas('pinjaman', function ($q) use ($pinjaman) {
+                    $q->where('amount', 'LIKE', "%$pinjaman%");
+                });
+            })
+            ->when($this->filters['bunga_pinjaman'], function($query, $bunga){
+                $query->whereHas('pinjaman', function ($q) use ($bunga) {
+                    $q->where('interest', 'LIKE', "%$bunga%");
+                });
+            })
+            ->when($this->filters['angsuran'], function($query, $angsuran){
+                $query->whereHas('pinjaman', function ($q) use ($angsuran) {
+                    $q->where('installments', $angsuran);
+                });
+            })
+            ->when($this->filters['ktp'], function($query, $ktp){
+                $query->where('number_identity', $ktp);
+            })
+            ->when($this->filters['status'], function($query, $status){
+                $query->whereHas('pinjaman', function($q) use ($status){
+                    $q->whereHas('detail', function($q) use ($status){
+                        if($status == 'di setujui'){
+                            $q->whereNotNull('date_acc_loan');
+                        }
+
+                        if($status == 'belum di setujui'){
+                            $q->whereNull('date_acc_loan');
+                        }
+                    });
+                });
+            })
             ->when($this->filters['search'], function ($query, $search) {
-                $query->where('status_verification',true)->whereAny(['username','roles','email'], 'LIKE', "%$search%");
-            })->where('status_verification', true);
+                $query->where('status_verification',true)
+                    ->whereAny(['number_identity','name','address','job','phone','age','email','status_verification'], 'LIKE', "%$search%");
+                })->where('status_verification', true);
 
         return $this->applyPagination($query);
     }

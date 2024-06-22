@@ -14,6 +14,10 @@
             <div>
                 <x-datatable.search placeholder="Cari nama nasabah..." />
             </div>
+
+            <div class="ms-2">
+                <x-datatable.filter.button target="verification-nasabah" />
+            </div>
         </div>
 
         <div class="col-auto ms-auto d-flex">
@@ -31,6 +35,63 @@
             </x-datatable.bulk.dropdown>
         </div>
     </div>
+
+    <x-datatable.filter.card id="verification-nasabah">
+        <div class="row">
+            <div class="col-lg-3 col-12">
+                <x-form.input
+                    wire:model.live="filters.ktp"
+                    name="filters.ktp"
+                    label="NO KTP"
+                    placeholder="masukkan no indentitias"
+                    type="text"
+                />
+            </div>
+
+            <div class="col-lg-3 col-12">
+                <x-form.select
+                    wire:model.lazy="filters.status"
+                    name="filters.status"
+                    label="Status Pinjaman"
+                >
+
+                    <option selected value=""> - Pilih Status Pinjaman - </option>
+                    @foreach (config('const.status_acc_loan') as $status)
+                        <option wire:key="row-{{ $status }}" value="{{ $status }}">{{ ucwords($status) }}
+                        </option>
+                    @endforeach
+
+                </x-form.select>
+            </div>
+
+            <div class="col-lg-2 col-12">
+                <x-form.input
+                    wire:model.live="filters.bunga_pinjaman"
+                    name="filters.bunga_pinjaman"
+                    label="Bunga Pinjaman"
+                    type="number"
+                />
+            </div>
+
+            <div class="col-lg-2 col-12">
+                <x-form.input
+                    wire:model.live="filters.angsuran"
+                    name="filters.angsuran"
+                    label="Angsuran Pembayaran"
+                    type="number"
+                />
+            </div>
+
+            <div class="col-lg-2 col-12">
+                <x-form.input
+                    wire:model.live="filters.total_pinjaman"
+                    name="filters.total_pinjaman"
+                    label="Total Pinjaman"
+                    type="number"
+                />
+            </div>
+        </div>
+    </x-datatable.filter.card>
 
     <div class="card" wire:loading.class.delay="card-loading" wire:offline.class="card-loading">
         <div class="table-responsive mb-0">
@@ -99,7 +160,7 @@
                                         <div class="d-flex flex-column">
                                             <div class="ms-2">{{ $row->name }}</div>
                                             <div class="ms-2">{{ $row->email }}</div>
-                                            <div class="ms-2">{{ $row->phone }}</div>
+                                            <div class="ms-2">{{ $row->number_identity }}</div>
                                         </div>
                                     </td>
                                 @endif
@@ -155,7 +216,7 @@
                                     <div class="d-flex flex-column">
                                         <div class="ms-2">{{ $row->name }}</div>
                                         <div class="ms-2">{{ $row->email }}</div>
-                                        <div class="ms-2">{{ $row->phone }}</div>
+                                        <div class="ms-2">{{ $row->number_identity }}</div>
                                     </div>
                                 </td>
 

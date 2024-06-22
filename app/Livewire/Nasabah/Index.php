@@ -20,7 +20,20 @@ class Index extends Component
 
     public $filters = [
         'search' => '',
+        'ktp' => '',
+        'nomor_ponsel' => '',
+        'umur' => '',
+        'pekerjaan' => '',
     ];
+
+    #[Computed()]
+    public function jobs(){
+        return Nasabah::query()
+            ->select('job')
+            ->groupBy('job')
+            ->distinct()
+            ->get();
+    }
 
     public function deleteSelected()
     {
@@ -59,8 +72,20 @@ class Index extends Component
     {
         $query = Nasabah::query()
             ->when(!$this->sorts, fn ($query) => $query->first())
+            ->when($this->filters['ktp'], function($query, $ktp){
+                $query->where('number_identity', $ktp);
+            })
+            ->when($this->filters['nomor_ponsel'], function($query, $nomorPonsel){
+                $query->where('phone', $nomorPonsel);
+            })
+            ->when($this->filters['umur'], function($query, $umur){
+                $query->where('age', $umur);
+            })
+            ->when($this->filters['pekerjaan'], function($query, $pekerjaan){
+                $query->where('job', $pekerjaan);
+            })
             ->when($this->filters['search'], function ($query, $search) {
-                $query->where('status_verification',false)->whereAny(['username','roles','email'], 'LIKE', "%$search%");
+                $query->where('status_verification',false)->whereAny(['name','number_identity','address','job','age','email'], 'LIKE', "%$search%");
             })->where('status_verification',false);
 
         return $this->applyPagination($query);

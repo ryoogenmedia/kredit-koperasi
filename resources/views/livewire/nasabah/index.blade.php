@@ -14,6 +14,10 @@
             <div>
                 <x-datatable.search placeholder="Cari nama nasabah..." />
             </div>
+
+            <div class="ms-2">
+                <x-datatable.filter.button target="nasabah" />
+            </div>
         </div>
 
         <div class="col-auto ms-auto d-flex">
@@ -31,6 +35,54 @@
             </x-datatable.bulk.dropdown>
         </div>
     </div>
+
+    <x-datatable.filter.card id="nasabah">
+        <div class="row">
+            <div class="col-lg-3 col-12">
+                <x-form.input
+                    wire:model.live="filters.ktp"
+                    name="filters.ktp"
+                    label="NO KTP"
+                    placeholder="masukkan no indentitias"
+                    type="text"
+                />
+            </div>
+
+            <div class="col-lg-3 col-12">
+                <x-form.select
+                    wire:model.lazy="filters.pekerjaan"
+                    name="filters.pekerjaan"
+                    label="Pekerjaan"
+                >
+
+                    <option selected value=""> - Pilih Pekerjaan - </option>
+                    @foreach ($this->jobs as $job)
+                        <option wire:key="row-{{ $job->job }}" value="{{ $job->job }}">{{ ucwords($job->job) }}
+                        </option>
+                    @endforeach
+
+                </x-form.select>
+            </div>
+
+            <div class="col-lg-3 col-12">
+                <x-form.input
+                    wire:model.live="filters.nomor_ponsel"
+                    name="filters.nomor_ponsel"
+                    label="Nomor Ponsel"
+                    type="number"
+                />
+            </div>
+
+            <div class="col-lg-3 col-12">
+                <x-form.input
+                    wire:model.live="filters.umur"
+                    name="filters.umur"
+                    label="Umur"
+                    type="number"
+                />
+            </div>
+        </div>
+    </x-datatable.filter.card>
 
     <div class="card" wire:loading.class.delay="card-loading" wire:offline.class="card-loading">
         <div class="table-responsive mb-0">
