@@ -40,6 +40,18 @@ Route::middleware('auth', 'verified', 'force.logout')->namespace('App\Livewire')
     });
 
     /**
+     * Akad
+     */
+    Route::namespace('Akad')->prefix('akad')->name('akad.')->group(function(){
+        Route::prefix('pinjaman')->name('pinjaman.')->group(function(){
+            Route::get('/', Index::class)->name('index');
+            Route::get('/pemberian-akad/{id}', Agreement::class)->name('agreement');
+        });
+
+        Route::get('/pencairan', Funds::class)->name('funds');
+    });
+
+    /**
      * setting
      */
     Route::prefix('pengaturan')->name('setting.')->middleware('roles:admin,user')->namespace('Setting')->group(function () {

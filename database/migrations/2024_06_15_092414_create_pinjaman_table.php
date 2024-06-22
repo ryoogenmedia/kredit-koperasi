@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('date')->nullable();
             $table->string('installments')->nullable();
             $table->string('amount_installments')->nullable();
+            $table->string('status_akad')->nullable()->default('belum di berikan');
+            $table->string('installments_type')->nullable()->default('bulan');
             $table->timestamps();
         });
     }

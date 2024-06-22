@@ -20,6 +20,8 @@ use HasFactory;
         'date',
         'installments',
         'amount_installments',
+        'status_akad',
+        'installments_type',
     ];
 
     protected $casts = [
@@ -29,6 +31,13 @@ use HasFactory;
         'interest' => 'integer',
         'installments' => 'integer',
         'amount_installments' => 'integer',
+        'status_akad' => 'string',
+        'installments_type' => 'string',
+    ];
+
+    protected $hidden = [
+        'status_akad',
+        'installments_type',
     ];
 
     public function detail(){

@@ -11,4 +11,9 @@ return [
         'di setujui',
         'belum di setujui',
     ],
+
+    'status_akad' => [
+        'di berikan',
+        'belum di berikan',
+    ],
 ];

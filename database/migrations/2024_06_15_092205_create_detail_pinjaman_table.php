@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('date_submission_loan')->nullable();
             $table->string('date_acc_loan')->nullable();
             $table->string('remaining_loan')->nullable();
+            $table->string('file_akad')->nullable();
             $table->text('note')->nullable();
             $table->timestamps();
         });
