@@ -12,7 +12,7 @@
                     <div class="container-tight">
                         <div class="text-center mb-4">
                             <a href="." class="navbar-brand navbar-brand-autodark">
-                                <img src="{{ asset('static/ryoogen.svg') }}" alt="">
+                                <img src="{{ asset('static/logo-koperasi.svg') }}" alt="">
                             </a>
                         </div>
 

@@ -6,7 +6,7 @@
         </button>
         <h1 class="navbar-brand navbar-brand-autodark">
             <a href="{{ route('home') }}" class="px-3">
-                <img src="{{ asset('static/ryoogen.svg') }}" width="100%" height="100%" alt="Tabler">
+                <img class="d-lg-block d-none" src="{{ asset('static/logo-koperasi-light.png') }}" width="100%" height="100%" alt="Logo Koperasi Setia Karya">
             </a>
         </h1>
         <div class="navbar-nav flex-row d-lg-none">
@@ -77,6 +77,10 @@
                         @endif
                     </li>
                 @endforeach
+
+                <li class="text-center my-3">
+                    <img class="d-lg-none" src="{{ asset('static/logo-koperasi-light.png') }}" width="30%" height="30%" alt="Logo Koperasi Setia Karya">
+                </li>
             </ul>
         </div>
     </div>
