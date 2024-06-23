@@ -57,6 +57,7 @@ class Agreement extends Component
 
         $pinjaman->update([
             'status_akad' => 'di berikan',
+            'confirmation_nasabah' => false,
         ]);
 
         $detailPinjaman->update([

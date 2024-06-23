@@ -164,6 +164,10 @@
 
                             <td>
                                 <p><span class="badge bg-{{ $row->status_akad == 'di berikan' ? 'success' : 'orange' }}-lt">{{ $row->status_akad }}</span></p>
+
+                                @if (isset($row->confirmation_nasabah))
+                                    <p><span class="badge bg-{{ $row->confirmation_nasabah ? 'blue' : 'danger' }}-lt">{{ !$row->confirmation_nasabah ? 'belum di setujui nasabah' : 'di setujui nasabah' }}</span></p>
+                                @endif
                             </td>
 
                             <td>{{ money_format_idr($row->amount) }}</td>

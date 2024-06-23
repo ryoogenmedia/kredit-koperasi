@@ -21,6 +21,7 @@ use HasFactory;
         'installments',
         'amount_installments',
         'status_akad',
+        'confirmation_nasabah',
         'installments_type',
     ];
 
@@ -33,11 +34,13 @@ use HasFactory;
         'amount_installments' => 'integer',
         'status_akad' => 'string',
         'installments_type' => 'string',
+        'confirmation_nasabah' => 'boolean',
     ];
 
     protected $hidden = [
         'status_akad',
         'installments_type',
+        'confirmation_nasabah',
     ];
 
     public function detail(){
