@@ -8,4 +8,5 @@
     <x-alert />
 
     <x-modal.delete-confirmation />
+
 </div>
