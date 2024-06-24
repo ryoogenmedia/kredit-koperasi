@@ -18,10 +18,12 @@ class DetailPinjaman extends Model
         'remaining_loan',
         'note',
         'file_akad',
+        'proof_funds',
     ];
 
     protected $hidden = [
         'file_akad',
+        'proof_funds',
     ];
 
     public function pinjaman(){
