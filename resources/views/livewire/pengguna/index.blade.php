@@ -107,7 +107,7 @@
 
                             <td>
                                 <span class="badge bg-{{ $row->roles == 'admin' ? 'green' : 'blue' }}-lt">
-                                    {{ $row->roles == 'user' ? 'Nasabah' : $row->roles }}
+                                    {{ $row->roles == 'user' ? 'nasabah' : $row->roles }}
                                 </span>
                             </td>
 
