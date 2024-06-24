@@ -6,9 +6,13 @@ use App\Livewire\Traits\DataTable\WithBulkActions;
 use App\Livewire\Traits\DataTable\WithCachedRows;
 use App\Livewire\Traits\DataTable\WithPerPagePagination;
 use App\Livewire\Traits\DataTable\WithSorting;
+use App\Models\DetailPinjaman;
 use App\Models\Pinjaman;
+use Exception;
+use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Funds extends Component
 {
@@ -16,6 +20,7 @@ class Funds extends Component
     use WithPerPagePagination;
     use WithCachedRows;
     use WithSorting;
+    use WithFileUploads;
 
     public $filters = [
         'search' => '',
@@ -25,6 +30,13 @@ class Funds extends Component
         'angsuran' => '',
         'total_pinjaman' => '',
     ];
+
+    public $show = false;
+    public $showTwo = false;
+    public $buktiTransfer;
+    public $detailPinjamanId;
+    public $pinjamanId;
+    public $imageBuktiTransfer;
 
     public function deleteSelected()
     {
@@ -44,6 +56,64 @@ class Funds extends Component
         ]);
 
         return redirect()->route('akad.index');
+    }
+
+    public function openModal($id){
+        $pinjaman = Pinjaman::findOrFail($id);
+
+        if($pinjaman){
+            $this->pinjamanId = $pinjaman->id;
+            $this->detailPinjamanId = $pinjaman->detail->id;
+        }
+
+        $this->show = true;
+    }
+
+    public function closeModal(){
+        $this->show = false;
+    }
+
+    public function openModalTwo($id){
+        $pinjaman = Pinjaman::findOrFail($id);
+        $this->imageBuktiTransfer = $pinjaman->detail->proof_funds;
+        $this->showTwo = true;
+    }
+
+    public function closeModalTwo(){
+        $this->showTwo = false;
+    }
+
+    public function save(){
+        $this->validate([
+            'buktiTransfer' => ['required','image','mimes:png,jpg','max:2048'],
+        ]);
+
+        $detailPinjaman = DetailPinjaman::findOrFail($this->detailPinjamanId);
+
+        try{
+            DB::beginTransaction();
+
+            $detailPinjaman->update([
+                'proof_funds' => $this->buktiTransfer->store('nasabah/proof-funds','public'),
+            ]);
+
+            DB::commit();
+        }catch(Exception $e){
+            session()->flash('alert', [
+                'type' => 'danger',
+                'message' => 'Gagal.',
+                'detail' => "Pencairan dana gagal di lakukan!.",
+            ]);
+        }
+
+        session()->flash('alert', [
+            'type' => 'success',
+            'message' => 'Berhasil.',
+            'detail' => "Pencairan dana berhasil di lakukan.",
+        ]);
+
+        $this->show = false;
+        return redirect()->route('akad.funds');
     }
 
     #[Computed()]

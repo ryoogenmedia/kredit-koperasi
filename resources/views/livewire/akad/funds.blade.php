@@ -9,6 +9,48 @@
 
     <x-modal.delete-confirmation />
 
+    <x-modal size="md" :show="$show">
+        <form wire:submit='save'>
+            <div class="modal-header">
+                <h5 class="modal-title">Konfirmasi Pencairan Dana</h5>
+                <button wire:click='closeModal' type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <x-form.input
+                    wire:model='buktiTransfer'
+                    type='file'
+                    name="buktiTransfer"
+                    label="Bukti Transfer"
+                />
+            </div>
+            <div class="modal-footer">
+                <div class="btn-list justify-content-end">
+                    <button type="reset" class="btn">Reset</button>
+
+                    <x-datatable.button.save
+                        name="Cairkan Dana"
+                        target="save"
+                    />
+                </div>
+            </div>
+        </form>
+    </x-modal>
+
+    <x-modal size="md" :show="$showTwo">
+        <div class="modal-header">
+            <h5 class="modal-title">Bukti Transfer Pencairan Dana</h5>
+            <button wire:click='closeModalTwo' type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="overflow: hidden">
+            <img style="width: 500px; height: 300px; object-fit:cover" src="{{ asset('storage/' . $this->imageBuktiTransfer) }}" alt="bukti-transfer-pencairan-dana">
+        </div>
+        <div class="modal-footer">
+            <div class="btn-list justify-content-end">
+                <button wire:click='closeModalTwo' type="reset" class="btn">Tutup</button>
+            </div>
+        </div>
+    </x-modal>
+
     <div class="row mb-3 align-items-center justify-content-between">
         <div class="col-12 col-lg-5 d-flex">
             <div>
@@ -107,6 +149,10 @@
                         </th>
 
                         <th>
+                            <x-datatable.column-sort name="Status Pencairan" wire:click="sortBy('name')" :direction="$sorts['name'] ?? null" />
+                        </th>
+
+                        <th>
                             <x-datatable.column-sort name="Total Pinjaman" wire:click="sortBy('number_identity')" :direction="$sorts['number_identity'] ?? null" />
                         </th>
 
@@ -158,6 +204,10 @@
                                 </div>
                             </td>
 
+                            <td>
+                                <p><span class="badge bg-{{ $row->detail->proof_funds ? 'success' : 'danger' }}-lt">{{ $row->detail->proof_funds ? 'sudah di berikan' : 'belum di berikan' }}</span></p>
+                            </td>
+
                             <td>{{ money_format_idr($row->amount) }}</td>
 
                             <td>% {{ $row->interest ?? '-' }}</td>
@@ -167,7 +217,11 @@
                             <td>
                                 <div class="d-flex">
                                     <div class="ms-auto">
-                                        <button class="btn btn-success">Carikan Dana</button>
+                                        @if ($row->detail->proof_funds)
+                                            <button wire:click='openModalTwo({{ $row->id }})' class="btn">Lihat Bukti Transfer</button>
+                                        @else
+                                            <button wire:click='openModal({{ $row->id }})' class="btn btn-success">Carikan Dana</button>
+                                        @endif
                                     </div>
                                 </div>
                             </td>
