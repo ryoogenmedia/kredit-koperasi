@@ -122,7 +122,15 @@ class Funds extends Component
         $query = Pinjaman::query()
             ->when(!$this->sorts, fn ($query) => $query->first())
             ->when($this->filters['status'], function($query, $status){
-                $query->where('status_akad', $status);
+                $query->whereHas('detail', function($query) use ($status){
+                    if($status == 'sudah di berikan'){
+                        $query->whereNotNull('proof_funds');
+                    }
+
+                    if($status == 'belum di berikan'){
+                        $query->whereNull('proof_funds');
+                    }
+                });
             })
             ->when($this->filters['ktp'], function($query, $ktp){
                 $query->whereHas('nasabah', function($query) use ($ktp){

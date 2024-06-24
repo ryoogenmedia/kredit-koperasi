@@ -94,11 +94,11 @@
                 <x-form.select
                     wire:model.lazy="filters.status"
                     name="filters.status"
-                    label="Status Akad"
+                    label="Status Pencairan"
                 >
 
-                    <option selected value=""> - Pilih Status Akad - </option>
-                    @foreach (config('const.status_akad') as $status)
+                    <option selected value=""> - Pilih Status Pencairan - </option>
+                    @foreach (config('const.status_pencairan') as $status)
                         <option wire:key="row-{{ $status }}" value="{{ $status }}">{{ ucwords($status) }}
                         </option>
                     @endforeach

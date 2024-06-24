@@ -16,4 +16,9 @@ return [
         'di berikan',
         'belum di berikan',
     ],
+
+    'status_pencairan' => [
+        'sudah di berikan',
+        'belum di berikan',
+    ],
 ];
