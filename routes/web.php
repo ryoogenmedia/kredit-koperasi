@@ -73,7 +73,7 @@ Route::middleware('auth', 'verified', 'force.logout')->namespace('App\Livewire')
     /**
      * setting
      */
-    Route::prefix('pengaturan')->middleware('roles:admin,operator')->name('setting.')->middleware('roles:admin,user')->namespace('Setting')->group(function () {
+    Route::prefix('pengaturan')->middleware('roles:admin,operator')->name('setting.')->namespace('Setting')->group(function () {
         Route::redirect('/', 'pengaturan/aplikasi');
 
         /**

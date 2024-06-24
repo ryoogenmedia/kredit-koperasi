@@ -19,6 +19,7 @@ class DetailPinjaman extends Model
         'note',
         'file_akad',
         'proof_funds',
+        'date_repayment',
     ];
 
     protected $hidden = [

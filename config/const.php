@@ -21,4 +21,9 @@ return [
         'sudah di berikan',
         'belum di berikan',
     ],
+
+    'status_payment' => [
+        'lunas',
+        'belum lunas',
+    ],
 ];

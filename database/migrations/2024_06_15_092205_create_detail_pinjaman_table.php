@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('file_akad')->nullable();
             $table->text('note')->nullable();
             $table->string('proof_funds')->nullable();
+            $table->string('date_repayment')->nullable();
             $table->timestamps();
         });
     }
