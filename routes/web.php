@@ -20,12 +20,31 @@ Route::middleware('auth', 'verified', 'force.logout')->namespace('App\Livewire')
      * beranda / home
      */
     Route::get('beranda', Home\Index::class)->name('home')
-        ->middleware('roles:admin,user,operator');
+        ->middleware('roles:admin,operator');
+
+    /**
+     * Pembayaran / Payment
+     */
+    Route::namespace('Payment')->prefix('pembayaran')->name('payment.')->middleware('roles:operator')->group(function(){
+        Route::redirect('/pembayaran', '/pembayaran/pinjaman');
+        Route::get('/pinjaman', Loan::class)->name('loan');
+        Route::get('/angsuran', InstallMents::class)->name('installments');
+    });
+
+    /**
+     * Laporan / Report
+     */
+    Route::namespace('Report')->prefix('laporan')->name('report.')->middleware('roles:operator')->group(function(){
+        Route::redirect('/laporan', 'laporan/pinjaman');
+        Route::get('/pinjaman', Loan::class)->name('loan');
+        Route::get('/angsuran', Installments::class)->name('installments');
+        Route::get('/nasabah', Nasabah::class)->name('nasabah');
+    });
 
     /**
      * User / Pengguna
      */
-    Route::namespace('Pengguna')->prefix('pengguna')->name('pengguna.')->group(function () {
+    Route::namespace('Pengguna')->middleware('roles:admin')->prefix('pengguna')->name('pengguna.')->group(function () {
             Route::get('/', Index::class)->name('index');
             Route::get('/tambah', Create::class)->name('create');
             Route::get('/sunting/{id}', Edit::class)->name('edit');
@@ -34,7 +53,7 @@ Route::middleware('auth', 'verified', 'force.logout')->namespace('App\Livewire')
     /**
      * Nasabah
      */
-    Route::namespace('Nasabah')->prefix('nasabah')->name('nasabah.')->group(function () {
+    Route::namespace('Nasabah')->middleware('roles:admin')->prefix('nasabah')->name('nasabah.')->group(function () {
         Route::get('/', Index::class)->name('index');
         Route::get('/verfikasi', Verification::class)->name('verification');
     });
@@ -42,7 +61,7 @@ Route::middleware('auth', 'verified', 'force.logout')->namespace('App\Livewire')
     /**
      * Akad
      */
-    Route::namespace('Akad')->prefix('akad')->name('akad.')->group(function(){
+    Route::namespace('Akad')->middleware('roles:admin')->prefix('akad')->name('akad.')->group(function(){
         Route::prefix('pinjaman')->name('pinjaman.')->group(function(){
             Route::get('/', Index::class)->name('index');
             Route::get('/pemberian-akad/{id}', Agreement::class)->name('agreement');
@@ -54,7 +73,7 @@ Route::middleware('auth', 'verified', 'force.logout')->namespace('App\Livewire')
     /**
      * setting
      */
-    Route::prefix('pengaturan')->name('setting.')->middleware('roles:admin,user')->namespace('Setting')->group(function () {
+    Route::prefix('pengaturan')->middleware('roles:admin,operator')->name('setting.')->middleware('roles:admin,user')->namespace('Setting')->group(function () {
         Route::redirect('/', 'pengaturan/aplikasi');
 
         /**

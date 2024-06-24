@@ -7,7 +7,7 @@ return [
         'route-name' => 'home',
         'is-active' => 'home',
         'description' => 'Untuk melihat ringkasan aplikasi.',
-        'roles' => ['admin', 'user'],
+        'roles' => ['admin', 'operator'],
     ],
 
     [
@@ -29,6 +29,58 @@ return [
                 'description' => 'Melihat daftar verfikasi nasabah.',
                 'route-name' => 'nasabah.verification',
                 'is-active' => 'setting.verification',
+            ],
+        ],
+    ],
+
+    [
+        'title' => 'Pembayaran',
+        'description' => 'daftar data pembayaran nasabah',
+        'icon' => 'hand-holding-usd',
+        'route-name' => 'payment.loan',
+        'is-active' => 'payment*',
+        'roles' => ['operator'],
+        'sub-menus' => [
+            [
+                'title' => 'Pinjaman',
+                'description' => 'Melihat daftar pinjaman nasabah.',
+                'route-name' => 'payment.loan',
+                'is-active' => 'payment.loan',
+            ],
+            [
+                'title' => 'Angsuran',
+                'description' => 'Melihat daftar angsuran nasabah.',
+                'route-name' => 'payment.installments',
+                'is-active' => 'payment.installments',
+            ],
+        ],
+    ],
+
+    [
+        'title' => 'Laporan',
+        'description' => 'daftar data laporan kuangan dan nasabah',
+        'icon' => 'file-pdf',
+        'route-name' => 'report.loan',
+        'is-active' => 'report*',
+        'roles' => ['operator'],
+        'sub-menus' => [
+            [
+                'title' => 'Pinjaman',
+                'description' => 'Melihat daftar laporan pinjaman nasabah.',
+                'route-name' => 'report.loan',
+                'is-active' => 'report.loan',
+            ],
+            [
+                'title' => 'Angsuran',
+                'description' => 'Melihat daftar laporan angsuran nasabah.',
+                'route-name' => 'report.installments',
+                'is-active' => 'report.installments',
+            ],
+            [
+                'title' => 'Nasabah',
+                'description' => 'Melihat daftar laporan nasabah.',
+                'route-name' => 'report.nasabah',
+                'is-active' => 'report.nasabah',
             ],
         ],
     ],
@@ -71,7 +123,7 @@ return [
         'icon' => 'cog',
         'route-name' => 'setting.profile.index',
         'is-active' => 'setting*',
-        'roles' => ['admin', 'user'],
+        'roles' => ['admin','operator'],
         'sub-menus' => [
             [
                 'title' => 'Profil',

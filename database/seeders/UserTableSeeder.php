@@ -29,11 +29,11 @@ class UserTableSeeder extends Seeder
                 'roles' => 'admin',
             ],
             [
-                'username' => 'Hamka',
-                'email' => 'hamkairsal2001@gmail.com',
+                'username' => 'Hasrianti Operator',
+                'email' => 'hasrianti10@gmail.com',
                 'email_verified_at' => now(),
-                'password' => bcrypt('hamka123'),
-                'roles' => 'user',
+                'password' => bcrypt('hasrianti123'),
+                'roles' => 'operator',
             ],
             [
                 'username' => 'Hasrianti',
