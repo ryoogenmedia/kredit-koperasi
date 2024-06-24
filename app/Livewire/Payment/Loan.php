@@ -6,7 +6,6 @@ use App\Livewire\Traits\DataTable\WithBulkActions;
 use App\Livewire\Traits\DataTable\WithCachedRows;
 use App\Livewire\Traits\DataTable\WithPerPagePagination;
 use App\Livewire\Traits\DataTable\WithSorting;
-use App\Models\DetailPinjaman;
 use App\Models\Nasabah;
 use App\Models\Pinjaman;
 use Livewire\Attributes\Computed;
