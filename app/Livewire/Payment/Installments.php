@@ -7,6 +7,8 @@ use App\Livewire\Traits\DataTable\WithCachedRows;
 use App\Livewire\Traits\DataTable\WithPerPagePagination;
 use App\Livewire\Traits\DataTable\WithSorting;
 use App\Models\Angsuran;
+use App\Models\Nasabah;
+use App\Models\Pinjaman;
 use Livewire\Attributes\Computed;
 
 use Livewire\Component;
@@ -45,6 +47,16 @@ class Installments extends Component
         $angsuran->update([
             'confirmation_repayment' => true,
         ]);
+
+        $pinjaman = Pinjaman::findOrFail($angsuran->pinjaman_id);
+
+        $jmlAngsuran = $pinjaman->angsuran->count();
+
+        if($jmlAngsuran == $pinjaman->interest){
+            $pinjaman->detail->update([
+                'date_repayment' => now(),
+            ]);
+        }
 
         session()->flash('alert', [
             'type' => 'success',
