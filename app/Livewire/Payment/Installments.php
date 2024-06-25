@@ -62,6 +62,14 @@ class Installments extends Component
                 }
             })->with('pinjaman', function($q){
                 $q->with('nasabah')->select('*')->groupBy('nasabah_id');
+            })->whereHas('pinjaman', function($query){
+                $query->where('confirmation_nasabah', true)
+                    ->where('status_akad', 'di berikan')
+                    ->whereNotNull('date')
+                    ->whereHas('detail', function($query){
+                        $query->whereNotNull('date_acc_loan')
+                            ->whereNotNull('proof_funds');
+                    });
             });
 
         return $this->applyPagination($query);
@@ -70,7 +78,15 @@ class Installments extends Component
     #[Computed()]
     public function allData()
     {
-        return Angsuran::all();
+        return Angsuran::whereHas('pinjaman', function($query){
+            $query->where('confirmation_nasabah', true)
+                ->where('status_akad', 'di berikan')
+                ->whereNotNull('date')
+                ->whereHas('detail', function($query){
+                    $query->whereNotNull('date_acc_loan')
+                        ->whereNotNull('proof_funds');
+                });
+        });
     }
 
     public function updatedFilters()
