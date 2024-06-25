@@ -20,6 +20,7 @@ class Angsuran extends Model
         'remaining_installments',
         'remaining_loan',
         'proof',
+        'confirmation_repayment',
     ];
 
     protected $casts = [
@@ -28,7 +29,8 @@ class Angsuran extends Model
         'date_installments' => 'datetime',
         'remaining_installments' => 'integer',
         'remaining_loan' => 'integer',
-        'proof' => 'string'
+        'proof' => 'string',
+        'confirmation_repayment' => 'boolean',
     ];
 
     public function pinjaman(){

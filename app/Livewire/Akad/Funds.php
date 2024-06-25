@@ -95,6 +95,7 @@ class Funds extends Component
 
             $detailPinjaman->update([
                 'proof_funds' => $this->buktiTransfer->store('nasabah/proof-funds','public'),
+                'date' => now(),
             ]);
 
             DB::commit();

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('remaining_installments')->nullable();
             $table->string('remaining_loan')->nullable();
             $table->string('proof')->nullable();
+            $table->boolean('confirmation_repayment')->default(false);
             $table->timestamps();
         });
     }

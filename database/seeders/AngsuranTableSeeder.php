@@ -20,7 +20,7 @@ class AngsuranTableSeeder extends Seeder
                 'date_installments' => now(),
                 'installments_to' => 1,
                 'remaining_installments' => 11,
-                'remaining_loan' => 1804000,
+                'remaining_loan' => 1833314,
                 'proof' => 'proof/proof-01.jpeg',
             ]
         ];
