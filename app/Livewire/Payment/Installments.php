@@ -25,6 +25,41 @@ class Installments extends Component
         'status_installments' => '',
     ];
 
+    public $show = false;
+    public $angsuranId;
+    public $imageProof;
+
+    public function openModal($id){
+        $angsuran = Angsuran::findOrFail($id);
+        $this->show = true;
+
+        if($angsuran){
+            $this->imageProof = $angsuran->proof;
+            $this->angsuranId = $angsuran->id;
+        }
+    }
+
+    public function confirmationInstallments(){
+        $angsuran = Angsuran::findOrFail($this->angsuranId);
+
+        $angsuran->update([
+            'confirmation_repayment' => true,
+        ]);
+
+        session()->flash('alert', [
+            'type' => 'success',
+            'message' => 'Berhasil.',
+            'detail' => "Angsuran berhasil di konfirmasi.",
+        ]);
+
+        $this->show = false;
+        return redirect()->route('payment.installments');
+    }
+
+    public function closeModal(){
+        $this->show = false;
+    }
+
     #[Computed()]
     public function rows()
     {

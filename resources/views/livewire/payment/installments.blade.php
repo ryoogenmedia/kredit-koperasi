@@ -7,6 +7,22 @@
 
     <x-alert />
 
+    <x-modal size="md" :show="$show">
+        <div class="modal-header">
+            <h5 class="modal-title">Konfirmasi Pembayaran</h5>
+            <button wire:click='closeModal' type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body overflow-hidden">
+            <img width="500px" height="300px" src="{{ asset('storage/' . $this->imageProof) }}" alt="bukti-bayar-nasabah">
+        </div>
+        <div class="modal-footer">
+            <div class="btn-list justify-content-end">
+                <button wire:click='closeModal' type="reset" class="btn">Tutup</button>
+                <button wire:click='confirmationInstallments' class="btn btn-success">Konfirmasi Pembayaran</button>
+            </div>
+        </div>
+    </x-modal>
+
     <div class="row mb-3 align-items-center justify-content-between">
         <div class="col-12 col-lg-5 d-flex">
             <div>
@@ -97,8 +113,8 @@
                         @endphp
 
                         @foreach ($amortisasi['tabel_amortisasi'] as  $data)
-                            <tr wire:key="row-{{ $row->id }}-{{ $loop->index + 1 }}">
-                                @if ($loop->index + 1 == 1)
+                            <tr wire:key="row-{{ $row->id }}-{{ $loop->iteration }}">
+                                @if ($loop->iteration == 1)
                                     <td class="p-0" rowspan="{{ $row->pinjaman->installments }}">
                                         <div class="p-3 d-flex flex-column">
                                             <div class="ms-2"><strong>{{ $row->nasabah->name }}</strong></div>
@@ -121,26 +137,26 @@
 
                                 <td style="padding: 15px;">
                                     @if ($row->pinjaman->installments_type == 'bulan')
-                                        {{ $row->pinjaman->date->addDay(30*$loop->index + 1)->format('d/m/Y') }}
+                                        {{ $row->pinjaman->date->addDay(30*$loop->iteration)->format('d/m/Y') }}
                                     @endif
 
                                     @if ($row->pinjaman->installments_type == 'hari')
-                                        {{ $row->pinjaman->date->addDay(1*$loop->index + 1)->format('d/m/Y') }}
+                                        {{ $row->pinjaman->date->addDay(1*$loop->iteration)->format('d/m/Y') }}
                                     @endif
 
                                     @if ($row->pinjaman->installments_type == 'tahun')
-                                        {{ $row->pinjaman->date->addYear(1*$loop->index + 1)->format('d/m/Y') }}
+                                        {{ $row->pinjaman->date->addYear(1*$loop->iteration)->format('d/m/Y') }}
                                     @endif
                                 </td>
 
                                 <td style="padding: 15px;">
-                                    @if ($row->installments_to == $loop->index + 1)
+                                    @if ($row->installments_to == $loop->iteration)
                                         <p class="mb-0 pb-0">
                                             <span class="badge bg-{{ $row->proof ? 'success' : 'danger' }}-lt">{{ $row->proof ? 'sudah bayar' : 'belum bayar' }}</span>
                                         </p>
 
                                         <p class="mt-2 mb-0 pb-0">
-                                            <span class="badge bg-{{ $row->confirmation_repayment ? 'success' : 'primary' }}-lt">{{ $row->confirmation_repayment ? 'terkonfirmasi' : 'butuh konfirmasi' }}</span>
+                                            <span class="badge bg-{{ $row->confirmation_repayment ? 'primary' : 'danger' }}-lt">{{ $row->confirmation_repayment ? 'terkonfirmasi' : 'butuh konfirmasi' }}</span>
                                         </p>
                                     @else
                                         <p class="mt-2 mb-0 pb-0">
@@ -173,8 +189,9 @@
                                     <div class="d-flex">
                                         <div style="width: 150px"class="ms-auto">
                                             <button
+                                                {{ $row->installments_to == $loop->iteration && $row->proof ? '' : 'disabled' }}
                                                 class="btn btn-success"
-                                                wire:click='confirmationInterest({{ $row->id }})'
+                                                wire:click='openModal({{ $row->id }})'
                                             >
                                                 Konfirmasi
                                             </button>
