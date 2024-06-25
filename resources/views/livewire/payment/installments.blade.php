@@ -21,7 +21,7 @@
 
     <x-datatable.filter.card id="verification-nasabah">
         <div class="row">
-            <div class="col-lg-3 col-12">
+            <div class="col-lg-4 col-12">
                 <x-form.input
                     wire:model.live="filters.ktp"
                     name="filters.ktp"
@@ -31,15 +31,15 @@
                 />
             </div>
 
-            <div class="col-lg-3 col-12">
+            <div class="col-lg-4 col-12">
                 <x-form.select
-                    wire:model.lazy="filters.status"
-                    name="filters.status"
-                    label="Status Pembayaran"
+                    wire:model.lazy="filters.status_installments"
+                    name="filters.status_installments"
+                    label="Status Angsuran"
                 >
 
-                    <option selected value=""> - Pilih Status Pembayaran - </option>
-                    @foreach (config('const.status_payment') as $status)
+                    <option selected value=""> - Pilih Status Angsuran - </option>
+                    @foreach (config('const.status_installments') as $status)
                         <option wire:key="row-{{ $status }}" value="{{ $status }}">{{ ucwords($status) }}
                         </option>
                     @endforeach
@@ -47,31 +47,20 @@
                 </x-form.select>
             </div>
 
-            <div class="col-lg-2 col-12">
-                <x-form.input
-                    wire:model.live="filters.bunga_pinjaman"
-                    name="filters.bunga_pinjaman"
-                    label="Bunga Pinjaman"
-                    type="number"
-                />
-            </div>
+            <div class="col-lg-4 col-12">
+                <x-form.select
+                    wire:model.lazy="filters.status_confirm"
+                    name="filters.status_confirm"
+                    label="Status Konfirmasi"
+                >
 
-            <div class="col-lg-2 col-12">
-                <x-form.input
-                    wire:model.live="filters.angsuran"
-                    name="filters.angsuran"
-                    label="Angsuran Pembayaran"
-                    type="number"
-                />
-            </div>
+                    <option selected value=""> - Pilih Status Konfirmasi - </option>
+                    @foreach (config('const.status_confirm') as $status)
+                        <option wire:key="row-{{ $status }}" value="{{ $status }}">{{ ucwords($status) }}
+                        </option>
+                    @endforeach
 
-            <div class="col-lg-2 col-12">
-                <x-form.input
-                    wire:model.live="filters.total_pinjaman"
-                    name="filters.total_pinjaman"
-                    label="Total Pinjaman"
-                    type="number"
-                />
+                </x-form.select>
             </div>
         </div>
     </x-datatable.filter.card>
@@ -147,7 +136,6 @@
                                 <td style="padding: 15px;">
                                     @if ($row->installments_to == $loop->index + 1)
                                         <p class="mb-0 pb-0">
-
                                             <span class="badge bg-{{ $row->proof ? 'success' : 'danger' }}-lt">{{ $row->proof ? 'sudah bayar' : 'belum bayar' }}</span>
                                         </p>
 
@@ -181,7 +169,6 @@
                                     {{ $data['sisa_pokok'] }}
                                 </td>
 
-
                                 <td>
                                     <div class="d-flex">
                                         <div style="width: 150px"class="ms-auto">
@@ -204,7 +191,7 @@
                             <td class="text-start" colspan="3"><strong>{{ $amortisasi['total_pembayaran_pokok'] }}</strong></td>
                         </tr>
                     @empty
-                        <x-datatable.empty colspan="7"/>
+                        <x-datatable.empty colspan="9"/>
                     @endforelse
                 </tbody>
             </table>

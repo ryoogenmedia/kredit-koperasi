@@ -20,11 +20,9 @@ class Installments extends Component
 
     public $filters = [
         'search' => '',
-        'total_pinjaman' => '',
-        'bunga_pinjaman' => '',
-        'angsuran' => '',
         'ktp' => '',
-        'status' => '',
+        'status_confirm' => '',
+        'status_installments' => '',
     ];
 
     #[Computed()]
@@ -32,34 +30,31 @@ class Installments extends Component
     {
         $query = Angsuran::query()
             ->when(!$this->sorts, fn ($query) => $query->first())
-            ->when($this->filters['angsuran'], function($query, $angsuran){
-                $query->whereHas('pinjaman', function($query) use ($angsuran){
-                    $query->where('installments', $angsuran);
-                });
+            ->when($this->filters['status_confirm'], function($query, $statusConfirm){
+                if($statusConfirm == 'butuh konfirmasi'){
+                    $query->where('confirmation_repayment', false);
+                }
+
+                if($statusConfirm == 'terkonfirmasi'){
+                    $query->where('confirmation_repayment', true);
+                }
             })
-            ->when($this->filters['bunga_pinjaman'], function($query, $bunga){
-                $query->whereHas('pinjaman', function($query) use ($bunga){
-                    $query->where('interest', $bunga);
-                });
-            })
-            ->when($this->filters['total_pinjaman'], function($query, $pinjaman){
-                $query->whereHas('pinjaman', function($query) use ($pinjaman){
-                    $query->where('amount', $pinjaman);
-                });
-            })
-            ->when($this->filters['ktp'], function($query, $ktp){
+            ->when($this->filters['status_installments'], function($query, $statusInstallments){
+                if($statusInstallments == 'sudah bayar'){
+                    $query->whereHas('detail', function($query){
+                        $query->whereNotNull('proof');
+                    });
+                }
+
+                if($statusInstallments == 'belum bayar' || $statusInstallments ==  'menunggu pembayaran'){
+                    $query->whereHas('detail', function($query){
+                        $query->whereNull('proof');
+                    });
+                }
+            })->when($this->filters['ktp'], function($query, $ktp){
                 $query->whereHas('nasabah', function($query) use ($ktp){
                     $query->where('number_identity', $ktp);
                 });
-            })
-            ->when($this->filters['status'], function($query, $status){
-                if($status == 'lunas'){
-                    $query->where('confirmation_repayment', true);
-                }
-
-                if($status == 'belum lunas'){
-                    $query->whereNull('confirmation_repayment', false);
-                }
             })->with('pinjaman', function($q){
                 $q->with('nasabah')->select('*')->groupBy('nasabah_id');
             })->whereHas('pinjaman', function($query){
