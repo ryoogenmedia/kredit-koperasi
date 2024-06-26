@@ -49,7 +49,7 @@
                 <div class="card mt-3">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
-                            <div>Nasabah / Pengajuan Pinjaman</div>
+                            <div>Nasabah / Pinjaman</div>
 
                             <div class="ms-auto lh-1">
                                 <span class="badge bg-blue-lt">Total</span>
@@ -65,7 +65,7 @@
                 <div class="card mt-3">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
-                            <div>Nasabah Belum Di Verifikasi</div>
+                            <div>Menunggu Konfirmasi Nasabah</div>
 
                             <div class="ms-auto lh-1">
                                 <span class="badge bg-blue-lt">Total</span>
@@ -81,7 +81,7 @@
                 <div class="card mt-3">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
-                            <div>Akad Belum Di Konfirmasi</div>
+                            <div>Menunggu Konfirmasi Akad</div>
 
                             <div class="ms-auto lh-1">
                                 <span class="badge bg-blue-lt">Total</span>
@@ -97,7 +97,7 @@
                 <div class="card mt-3">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
-                            <div>Pencairan Dana Nasabah</div>
+                            <div>Pencairan Dana</div>
 
                             <div class="ms-auto lh-1">
                                 <span class="badge bg-blue-lt">Total</span>
