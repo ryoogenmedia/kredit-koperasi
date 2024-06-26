@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Home;
 
+use App\Helpers\HomeCart;
 use App\Models\DetailPinjaman;
 use App\Models\Nasabah;
 use App\Models\Pinjaman;
@@ -19,6 +20,14 @@ class Index extends Component
     public $pengajuanPinjaman;
     public $jmlNasabah;
 
+    public $countNasabahVerification;
+    public $countAkadConfirm;
+    public $countFunds;
+    public $countLoan;
+
+    public $totalUangPencairan = 0;
+    public $totalPinjamanYangBelumCair;
+
     public function mount(){
         $this->jmlNasabahBelumVerifikasi = $this->nasabah('unverification');
         $this->jmlNasabahVerifikasi = $this->nasabah('verification');
@@ -31,6 +40,33 @@ class Index extends Component
 
         $this->pengajuanPinjaman = Pinjaman::count();
         $this->jmlNasabah = Nasabah::count();
+
+        $this->countNasabahVerification = HomeCart::NASABAH();
+        $this->countAkadConfirm = HomeCart::AKAD();
+        $this->countFunds = HomeCart::PENCAIRAN();
+        $this->countLoan = HomeCart::LOAN();
+
+        $pinjamanCair = Pinjaman::where("confirmation_nasabah", true)
+            ->whereHas('detail', function($query){
+                $query->whereNotNull('proof_funds');
+            })->get();
+
+        if($pinjamanCair){
+            foreach($pinjamanCair as $pinjaman){
+                $this->totalUangPencairan += $pinjaman->amount;
+            }
+        }
+
+        $pinjamanBelumCair = Pinjaman::where("confirmation_nasabah", false)
+            ->whereHas('detail', function($query){
+                $query->whereNull('proof_funds');
+            })->get();
+
+        if($pinjamanBelumCair){
+            foreach($pinjamanBelumCair as $pinjaman){
+                $this->totalPinjamanYangBelumCair += $pinjaman->amount;
+            }
+        }
     }
 
     public function nasabah($status){
