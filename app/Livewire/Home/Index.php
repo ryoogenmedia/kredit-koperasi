@@ -28,6 +28,11 @@ class Index extends Component
     public $totalUangPencairan = 0;
     public $totalPinjamanYangBelumCair;
 
+    public $totalPinjamanLunas;
+    public $totalPinjamanBelumLunas;
+
+    public $amortisasiKeuntungan;
+
     public function mount(){
         $this->jmlNasabahBelumVerifikasi = $this->nasabah('unverification');
         $this->jmlNasabahVerifikasi = $this->nasabah('verification');
@@ -67,6 +72,18 @@ class Index extends Component
                 $this->totalPinjamanYangBelumCair += $pinjaman->amount;
             }
         }
+
+        if(auth()->user()->roles == 'operator'){
+            $this->totalPinjamanLunas = Pinjaman::whereHas('detail', function($query){
+                $query->whereNotNull('date_repayment');
+            })->where('confirmation_nasabah', true)->count();
+
+            $this->totalPinjamanBelumLunas = Pinjaman::whereHas('detail', function($query){
+                $query->whereNull('date_repayment');
+            })->where('confirmation_nasabah', true)->count();
+        }
+
+        $this->amortisasiKeuntungan = hitungKeuntungan();
     }
 
     public function nasabah($status){

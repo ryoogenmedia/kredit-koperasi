@@ -131,14 +131,152 @@
     @endif
 
     @if (auth()->user()->roles == 'operator')
+        <div class="row">
+            <div class="col-md-4 col-12">
+                <div class="card my-2 bg-success-lt py-3">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div>Pokok Pinjaman</div>
 
+                            <div class="ms-auto lh-1">
+                                <span class="badge bg-success text-white">Uang</span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-baseline mt-3">
+                            <div class="h1 mb-0 me-2" style="font-size: 30px;">{{ $this->amortisasiKeuntungan['total_keseluruhan_pokok_awal'] }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-12">
+                <div class="card my-2 bg-primary-lt py-3">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div>Estimasi Total Angsuran Bulanan</div>
+
+                            <div class="ms-auto lh-1">
+                                <span class="badge bg-primary text-white">Uang</span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-baseline mt-3">
+                            <div class="h1 mb-0 me-2" style="font-size: 30px;">{{ $this->amortisasiKeuntungan['total_keseluruhan_angsuran_bulanan'] }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-12">
+                <div class="card my-2 bg-purple-lt py-3">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div>Estimasi Total Bunga Bulanan</div>
+
+                            <div class="ms-auto lh-1">
+                                <span class="badge bg-purple text-white">Uang</span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-baseline mt-3">
+                            <div class="h1 mb-0 me-2" style="font-size: 30px;">{{ $this->amortisasiKeuntungan['total_keseluruhan_bunga_bulanan'] }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-4 col-lg-3">
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div>Pinjaman Lunas</div>
+
+                            <div class="ms-auto lh-1">
+                                <span class="badge bg-primary-lt">Total</span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-baseline mt-3">
+                            <div class="h1 mb-0 me-2" style="font-size: 30px;">{{ $this->totalPinjamanLunas }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div>Belum Lunas</div>
+
+                            <div class="ms-auto lh-1">
+                                <span class="badge bg-primary-lt">Total</span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-baseline mt-3">
+                            <div class="h1 mb-0 me-2" style="font-size: 30px;">{{ $this->totalPinjamanBelumLunas }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div>Bunga Rata-Rata Pinjaman</div>
+
+                            <div class="ms-auto lh-1">
+                                <span class="badge bg-primary-lt">Total</span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-baseline mt-3">
+                            <div class="h1 mb-0 me-2" style="font-size: 30px;">% {{ average_interest() }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div>Angsuran Rata-Rata Pinjaman</div>
+
+                            <div class="ms-auto lh-1">
+                                <span class="badge bg-primary-lt">Total</span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-baseline mt-3">
+                            <div class="h1 mb-0 me-2" style="font-size: 30px;">{{ average_installments() }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-8 col-lg-9 d-flex">
+                <div class="card h-100 mt-3 w-100" wire:ignore>
+                    <div class="card-body">
+                        <h3 class="card-title">Data Koperasi Setia Karya 10 Hari Terakhir</h3>
+
+                        <div data-nasabah="{{ json_encode($this->countNasabahVerification['data']) }}"
+                            data-akad="{{ json_encode($this->countAkadConfirm['data']) }}"
+                            data-pencairan="{{ json_encode($this->countFunds['data']) }}"
+                            data-pinjaman="{{ json_encode($this->countLoan['data']) }}"
+                            date="{{ json_encode($this->countLoan['date']) }}"
+                            id="chart-mentions"
+                            class="chart-lg text-white">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     @endif
 </div>
 
 @push('scripts')
     <script>
         const item = document.getElementById('chart-mentions');
-        console.log(item.getAttribute('data-menunggu'));
         window.ApexCharts && (new ApexCharts(item, {
             chart: {
                 type: "bar",
