@@ -13,7 +13,7 @@
                 <x-datatable.search placeholder="Cari nama nasabah..." />
             </div>
 
-            <div class="ms-2">
+            <div class="ms-2 w-50">
                 <x-datatable.filter.button target="verification-nasabah" />
             </div>
         </div>

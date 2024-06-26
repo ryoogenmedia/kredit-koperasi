@@ -15,12 +15,12 @@
                 <x-datatable.search placeholder="Cari nama nasabah..." />
             </div>
 
-            <div class="ms-2">
+            <div class="ms-2 w-50">
                 <x-datatable.filter.button target="akad-pinjaman" />
             </div>
         </div>
 
-        <div class="col-auto ms-auto d-flex">
+        <div class="col-auto ms-auto d-flex mt-lg-0 mt-md-0 mt-3">
             <x-datatable.items-per-page />
 
             <x-datatable.bulk.dropdown>
