@@ -201,7 +201,7 @@
                             </tr>
                         @endforeach
 
-                        <tr>
+                        <tr class="bg-danger-lt">
                             <td class="text-start" colspan="4"><strong>TOTAL</strong></td>
                             <td class="text-start"><strong>{{ $amortisasi['total_bunga_bulanan'] }}</strong></td>
                             <td class="text-start"><strong>{{ $amortisasi['total_angsuran_bulanan'] }}</strong></td>
