@@ -8,13 +8,13 @@
     @if (auth()->user()->roles == 'admin')
         <div class="row">
             <div class="col-md-6 col-12">
-                <div class="card my-2 py-4">
+                <div class="card my-2 py-4 bg-success-lt">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>Jumlah Pinjaman Diberikan</div>
 
                             <div class="ms-auto lh-1">
-                                <span class="badge bg-blue-lt">Total</span>
+                                <span class="badge text-white bg-success">Total Uang</span>
                             </div>
                         </div>
 
@@ -26,13 +26,13 @@
             </div>
 
             <div class="col-md-6 col-12">
-                <div class="card my-2 py-4">
+                <div class="card my-2 py-4 bg-pink-lt">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div>Jumlah Pinjaman Belum Diberikan</div>
 
                             <div class="ms-auto lh-1">
-                                <span class="badge bg-blue-lt">Total</span>
+                                <span class="badge bg-pink text-white">Total Uang</span>
                             </div>
                         </div>
 
