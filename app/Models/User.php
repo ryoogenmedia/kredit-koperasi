@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Firebase\JWT\JWT;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -52,6 +53,17 @@ class User extends Authenticatable
         return $this->avatar
             ? url('storage/' . $this->avatar)
             : 'https://gravatar.com/avatar/' . md5(strtolower(trim($this->email))) . '?s=1024';
+    }
+
+    public function getJWTToken(){
+        $payload = [
+            'iss' => "jwt-ryoogen-media",
+            'sub' => $this->id,
+            'iat' => time(),
+            'exp' => time() + config('jwt.ttl') * 60
+        ];
+
+        return JWT::encode($payload, config('jwt.secret'), 'HS256');
     }
 
     public function nasabah(){

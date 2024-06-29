@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         // COUSTUM
         'force.logout' => \App\Http\Middleware\ForceLogout::class,
         'roles' => \App\Http\Middleware\CheckRoles::class,
+        'jwt.auth' => \App\Http\Middleware\JwtAuthenticate::class,
     ];
 }

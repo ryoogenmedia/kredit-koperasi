@@ -170,6 +170,9 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\FortifyUIServiceProvider::class,
+
+        // CUSTOM
+        App\Providers\JwtAuthServiceProvider::class,
     ])->toArray(),
 
     /*
