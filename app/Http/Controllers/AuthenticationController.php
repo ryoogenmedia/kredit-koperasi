@@ -27,8 +27,8 @@ class AuthenticationController extends Controller
             'name' => ['required','string','min:2','max:255','max:255'],
             'address' => ['required','string','min:2'],
             'job' => ['required','string','min:2','max:255'],
-            'phone' => ['required','string','min:2','max:255'],
-            'age' => ['required','string','min:2','max:255'],
+            'phone' => ['required','numeric'],
+            'age' => ['required','numeric','min:2','max:255'],
         ];
 
         $validator = Validator::make($data, $rules);
@@ -104,6 +104,10 @@ class AuthenticationController extends Controller
         }
 
         $user = User::query()->with('nasabah')->where('email', $request->email)->first();
+
+        $user->update([
+            'email_verified_at' => now(),
+        ]);
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
