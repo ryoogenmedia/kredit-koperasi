@@ -63,6 +63,7 @@ class AuthenticationController extends Controller
                     'user_id' => $user->id,
                     'number_identity' => $request->number_identitiy,
                     'name' => $request->name,
+                    'email' => $user->email,
                     'address' => $request->address,
                     'job' => $request->job,
                     'phone' => $request->phone,

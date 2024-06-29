@@ -57,7 +57,7 @@ class AngsuranController extends Controller
 
         $rules = [
             'pinjaman_id' => ['required'],
-            'proof' => ['required','image','min:2048'],
+            'proof' => ['required','image'],
         ];
 
         $validator = Validator::make($data, $rules);
