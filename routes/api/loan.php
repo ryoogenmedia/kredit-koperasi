@@ -9,4 +9,5 @@ Route::middleware('jwt.auth')->prefix('pinjaman')->name('pinjaman.')->group(func
     Route::put('/{id}', [PinjamanController::class, 'update'])->name('update');
     Route::delete('/{id}', [PinjamanController::class, 'destroy'])->name('destroy');
     Route::get('/{id}', [PinjamanController::class,'show'])->name('show');
+    Route::post('/confirmation/{id}', [PinjamanController::class,'confirmation'])->name('confirmation');
 });

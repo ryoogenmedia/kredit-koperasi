@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Traits\JwtAuth;
+use App\Models\DetailPinjaman;
 use App\Models\Pinjaman;
 use Exception;
 use Illuminate\Http\Request;
@@ -14,6 +15,56 @@ class PinjamanController extends Controller
     use JwtAuth;
 
     /**
+     * Display a listing of the resource confirmation loan.
+     */
+    public function confirmation(Request $request, string $id){
+        $data = $request->all();
+
+        $rules = [
+            'confirmation_nasabah' => ['required'],
+        ];
+
+        $validator = Validator::make($data, $rules);
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Konfirmasi pinjaman gagal dilakukan.',
+                'error' => $validator->errors(),
+            ]);
+        }
+
+        $pinjaman = Pinjaman::query()->where('id', $id)->first();
+
+        if(!$pinjaman){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Data pinjaman tidak ditemukan.',
+            ]);
+        }
+
+        try{
+            DB::beginTransaction();
+
+            $pinjaman->update($data);
+
+            DB::commit();
+        }catch(Exception $e){
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Konfrimasi pinjaman gagal.',
+                'data' => $e->getMessage(),
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data konfirmasi pinjaman berhasil dilakukan.',
+            'data' => $pinjaman,
+        ]);
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index()
@@ -21,7 +72,7 @@ class PinjamanController extends Controller
         $user = $this->user();
         $nasabah = $user->nasabah;
 
-        $pinjaman = Pinjaman::query()->where('nasabah_id', $nasabah->id)->get();
+        $pinjaman = Pinjaman::query()->with('detail')->where('nasabah_id', $nasabah->id)->get();
 
         if(!$pinjaman){
             return response()->json([
@@ -73,6 +124,12 @@ class PinjamanController extends Controller
                 'confirmation_nasabah' => false,
             ]);
 
+            DetailPinjaman::create([
+                'pinjaman_id' => $pinjaman->id,
+                'data_submission_loan' => now(),
+                'note' => 'Pinjaman dari bpk/ibu ' . $nasabah->name,
+            ]);
+
             DB::commit();
         }catch(Exception $e){
             return response()->json([
@@ -94,7 +151,7 @@ class PinjamanController extends Controller
      */
     public function show(string $id)
     {
-        $pinjaman = Pinjaman::query()->where('id', $id)->first();
+        $pinjaman = Pinjaman::query()->with('detail')->where('id', $id)->first();
 
         if(!$pinjaman){
             return response()->json([
@@ -140,6 +197,7 @@ class PinjamanController extends Controller
             $pinjaman->update($data);
 
             $pinjaman->update([
+                'nasabah_id' => $nasabah->id,
                 'date' => now(),
             ]);
 
