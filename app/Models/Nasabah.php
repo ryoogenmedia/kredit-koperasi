@@ -26,6 +26,7 @@ class Nasabah extends Model
     ];
 
     protected $casts = [
+        'user_id' => 'integer',
         'number_identitiy' => 'integer',
         'name' => 'string',
         'address' => 'string',
