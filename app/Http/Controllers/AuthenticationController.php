@@ -60,6 +60,7 @@ class AuthenticationController extends Controller
                 }
 
                 Nasabah::create([
+                    'user_id' => $user->id,
                     'number_identity' => $request->number_identitiy,
                     'name' => $request->name,
                     'address' => $request->address,

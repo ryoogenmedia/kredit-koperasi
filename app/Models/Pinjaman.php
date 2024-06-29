@@ -37,12 +37,6 @@ use HasFactory;
         'confirmation_nasabah' => 'boolean',
     ];
 
-    protected $hidden = [
-        'status_akad',
-        'installments_type',
-        'confirmation_nasabah',
-    ];
-
     public function detail(){
         return $this->hasOne(DetailPinjaman::class, 'pinjaman_id', 'id')->withDefault();
     }

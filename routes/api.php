@@ -20,3 +20,6 @@ Route::get('/', function(){
 
 # AUTHENTICATION
 require 'api/auth.php';
+
+#VERFICATION
+require 'api/verification.php';

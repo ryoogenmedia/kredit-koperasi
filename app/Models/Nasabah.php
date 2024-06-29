@@ -37,10 +37,6 @@ class Nasabah extends Model
         'status_verification' => 'boolean',
     ];
 
-    protected $hidden = [
-        'status_verification',
-    ];
-
     public function pinjaman(){
         return $this->hasMany(Pinjaman::class,'nasabah_id','id');
     }

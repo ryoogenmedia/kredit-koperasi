@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Exception;
 use Firebase\JWT\JWT;
@@ -29,7 +30,9 @@ class JwtAuthenticate
 
         try{
             $decoded = JWT::decode($token, new Key(config('jwt.secret'), 'HS256'));
-            $request->attributes->set('auth', $decoded);
+            $user = User::query()->with(['nasabah'])->where('id', $decoded->sub)->first();
+            $request->attributes->set('auth', $user);
+
         }catch(Exception $e){
             return response()->json([
                 'status' => 'error',
