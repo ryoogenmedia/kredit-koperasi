@@ -3,7 +3,7 @@
 use App\Http\Controllers\PinjamanController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('jwt.auth')->prefix('pinjaman')->name('pinjaman.')->group(function(){
+Route::middleware('jwt.auth')->prefix('loan')->name('loan.')->group(function(){
     Route::get('/', [PinjamanController::class,'index'])->name('index');
     Route::post('/', [PinjamanController::class,'store'])->name('store');
     Route::put('/{id}', [PinjamanController::class, 'update'])->name('update');

@@ -115,7 +115,7 @@ class PinjamanController extends Controller
 
             $pinjaman = Pinjaman::create($data);
 
-            $pinjaman->udpate([
+            $pinjaman->update([
                 'nasabah_id' => $nasabah->id,
                 'date' => now(),
                 'interest' => 2,
@@ -199,6 +199,7 @@ class PinjamanController extends Controller
             $pinjaman->update([
                 'nasabah_id' => $nasabah->id,
                 'date' => now(),
+                'confirmation_nasabah' => false,
             ]);
 
             DB::commit();
