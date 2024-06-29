@@ -159,6 +159,7 @@ if(!function_exists('hitungKeuntungan')){
  */
 if(!function_exists('hitungAmortisasi')){
     function hitungAmortisasi($pinjamanId) {
+        // Anda perlu mengganti ini sesuai dengan model dan logika aplikasi Anda
         $pinjaman = Pinjaman::findOrFail($pinjamanId);
 
         $jumlahPinjaman = $pinjaman->amount;
@@ -195,6 +196,9 @@ if(!function_exists('hitungAmortisasi')){
             $totalPembayaranPokok += $pembayaranPokok;
             $totalBungaBulanan += $bungaBulanan;
             $totalPokokAwal += $pokokAwal;
+
+
+            // Update nilai pokok awal untuk bulan berikutnya
             $pokokAwal = $sisaPokok;
         }
 
@@ -206,4 +210,5 @@ if(!function_exists('hitungAmortisasi')){
             'total_pokok_awal' => money_format_idr($totalPokokAwal),
         ];
     }
+
 }

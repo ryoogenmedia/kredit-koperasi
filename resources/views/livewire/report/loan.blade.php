@@ -6,4 +6,8 @@
     <x-slot name="pageTitle">Laporan Pinjaman</x-slot>
 
     <x-alert />
+
+
+
+
 </div>

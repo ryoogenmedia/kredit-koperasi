@@ -107,11 +107,7 @@ class Installments extends Component
             })->whereHas('pinjaman', function($query){
                 $query->where('confirmation_nasabah', true)
                     ->where('status_akad', 'di berikan')
-                    ->whereNotNull('date')
-                    ->whereHas('detail', function($query){
-                        $query->whereNotNull('date_acc_loan')
-                            ->whereNotNull('proof_funds');
-                    });
+                    ->whereNotNull('date');
             });
 
         return $this->applyPagination($query);
