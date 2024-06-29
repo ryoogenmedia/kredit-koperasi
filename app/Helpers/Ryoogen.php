@@ -67,8 +67,15 @@ if(!function_exists('average_installments')){
  * @return array amortisasi keuntungan
  */
 if(!function_exists('hitungKeuntungan')){
-    function hitungKeuntungan() {
-        $pinjamanSemua = Pinjaman::where('confirmation_nasabah', true)->get();
+    function hitungKeuntungan($nasabahId = null) {
+        if(!$nasabahId){
+            $pinjamanSemua = Pinjaman::where('confirmation_nasabah', true)->get();
+        }
+
+        if($nasabahId){
+            $pinjamanSemua = Pinjaman::where('confirmation_nasabah', true)
+                ->where('id', $nasabahId)->get();
+        }
 
         $hasilAmortisasi = [];
 

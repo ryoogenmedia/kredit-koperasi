@@ -22,11 +22,6 @@ class DetailPinjaman extends Model
         'date_repayment',
     ];
 
-    protected $hidden = [
-        'file_akad',
-        'proof_funds',
-    ];
-
     public function pinjaman(){
         return $this->belongsTo(Pinjaman::class,'pinjaman_id','id')->withDefault();
     }

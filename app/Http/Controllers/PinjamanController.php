@@ -72,7 +72,7 @@ class PinjamanController extends Controller
         $user = $this->user();
         $nasabah = $user->nasabah;
 
-        $pinjaman = Pinjaman::query()->with('detail')->where('nasabah_id', $nasabah->id)->get();
+        $pinjaman = Pinjaman::query()->with(['detail','angsuran'])->where('nasabah_id', $nasabah->id)->get();
 
         if(!$pinjaman){
             return response()->json([
@@ -151,7 +151,7 @@ class PinjamanController extends Controller
      */
     public function show(string $id)
     {
-        $pinjaman = Pinjaman::query()->with('detail')->where('id', $id)->first();
+        $pinjaman = Pinjaman::query()->with(['detail','angsuran'])->where('id', $id)->first();
 
         if(!$pinjaman){
             return response()->json([

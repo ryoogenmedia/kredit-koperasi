@@ -26,3 +26,6 @@ require 'api/nasabah.php';
 
 #LOAN / PINJAMAN
 require 'api/loan.php';
+
+#INSTALLMENTS / ANGSURAN
+require 'api/installments.php';
