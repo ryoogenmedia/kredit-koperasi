@@ -88,7 +88,7 @@ class NasabahController extends Controller
      */
     public function show(string $id)
     {
-        $nasbah = Nasabah::query()->where('id', $id)->frist();
+        $nasbah = Nasabah::query()->with(['angsuran','pinjaman'])->where('id', $id)->first();
 
         if(!$nasbah){
             return response()->json([
@@ -119,7 +119,6 @@ class NasabahController extends Controller
             'job' => ['required','string','min:2','max:255'],
             'phone' => ['required','string','min:2','max:255'],
             'age' => ['required','string','min:2','max:255'],
-            'email' => ['required','string','min:2','max:255','email','unique:nasabah,email' . $user->id],
         ];
 
         $validator = Validator::make($data, $rules);
@@ -146,12 +145,16 @@ class NasabahController extends Controller
 
             $nasabah->update($data);
 
+            $nasabah->update([
+                'email' => $user->email,
+            ]);
+
             DB::commit();
         }catch(Exception $e){
             return response()->json([
                 'status' => 'error',
                 'message' => 'Data nasabah gagal disunting.',
-                'data' => $e->getMessage(),
+                'data' => $e->getMessage()
             ]);
         }
 
