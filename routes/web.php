@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +17,15 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', '/login');
 
 Route::middleware('auth', 'verified', 'force.logout')->namespace('App\Livewire')->group(function () {
+    /**
+     * Report / Laporan
+     */
+    Route::middleware('roles:operator')->prefix('cetak')->name('cetak.')->group(function(){
+        Route::get('/nasbah', [ReportController::class,'nasabah'])->name('nasabah');
+        Route::get('/angsuran', [ReportController::class,'angsuran'])->name('angsuran');
+        Route::get('/pinjaman', [ReportController::class,'pinjaman'])->name('pinjaman');
+    });
+
     /**
      * beranda / home
      */

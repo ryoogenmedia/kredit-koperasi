@@ -8,6 +8,9 @@ use App\Livewire\Traits\DataTable\WithPerPagePagination;
 use App\Livewire\Traits\DataTable\WithSorting;
 use Livewire\Attributes\Computed;
 use App\Models\Nasabah as ModelNasabah;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 class Nasabah extends Component
@@ -17,29 +20,32 @@ class Nasabah extends Component
     use WithCachedRows;
     use WithSorting;
 
+    public $year = '';
     public $filters = [
         'search' => '',
         'ktp' => '',
     ];
 
-    public function deleteSelected()
-    {
-        $nasabah = ModelNasabah::whereIn('id', $this->selected)->get();
-        $deleteCount = $nasabah->count();
-
-        foreach ($nasabah as $data) {
-            $data->delete();
+    public function cetakNasabah(){
+        if(Session::get('cetak-nasabah')){
+            Session::remove('cetak-nasabah');
         }
 
-        $this->reset();
-
-        session()->flash('alert', [
-            'type' => 'success',
-            'message' => 'Berhasil.',
-            'detail' => "$deleteCount data nasabah berhasil dihapus.",
+        Session::put('cetak-nasabah', [
+            'data' => $this->rows(),
+            'tahun' => $this->year,
+            'ktp' => $this->filters['ktp']
         ]);
 
-        return redirect()->route('nasabah.index');
+        return redirect()->route('cetak.nasabah');
+    }
+
+    #[Computed()]
+    public function getYears(){
+        return ModelNasabah::select(DB::raw('YEAR(created_at) as year'))
+            ->groupBy('year')
+            ->distinct()
+            ->get();
     }
 
     public function changeVerification($id){
@@ -61,6 +67,9 @@ class Nasabah extends Component
             ->when(!$this->sorts, fn ($query) => $query->first())
             ->when($this->filters['ktp'], function($query, $ktp){
                 $query->where('number_identity', $ktp);
+            })
+            ->when($this->year, function($query, $year){
+                $query->whereYear('created_at', $year);
             })
             ->when($this->filters['search'], function ($query, $search) {
                 $query->where('status_verification',true)->whereAny(['name','number_identity','address','job','age','email'], 'LIKE', "%$search%");

@@ -10,18 +10,33 @@
     <x-modal.delete-confirmation />
 
     <div class="row mb-3 align-items-center justify-content-between">
-        <div class="col-12 col-lg-5 d-flex">
+        <div class="col-12 col-lg-9 d-flex">
             <div>
                 <x-datatable.search placeholder="Cari nama nasabah..." />
             </div>
             <div class="ms-2">
                 <input
-                    wire:model='filters.ktp'
+                    wire:model.lazy='filters.ktp'
                     name="ktp"
                     class="form-control"
-                    placeholder=""
+                    placeholder="Nomor KTP"
                 />
             </div>
+            <div class="ms-2">
+                <x-form.select
+                    wire:model.lazy='year'
+                    name='year'
+                >
+                    <option value="">- Pilih Tahun -</option>
+                    @foreach ($this->getYears as $data)
+                        <option value="{{ $data->year }}">{{ $data->year }}</option>
+                    @endforeach
+                </x-form.select>
+            </div>
+        </div>
+
+        <div class="col-auto ms-auto d-flex mt-lg-0 mt-md-0 mt-3 align-self-center">
+            <button wire:click='cetakNasabah' class="btn btn-danger mb-3">Cetak <i class="las la-print ms-2" style="font-size: 20px"></i></button>
         </div>
     </div>
 
@@ -36,6 +51,10 @@
 
                         <th>
                             <x-datatable.column-sort name="NO KTP" wire:click="sortBy('number_identity')" :direction="$sorts['number_identity'] ?? null" />
+                        </th>
+
+                        <th>
+                            <x-datatable.column-sort name="Nomor Ponsel" wire:click="sortBy('number_identity')" :direction="$sorts['number_identity'] ?? null" />
                         </th>
 
                         <th>
@@ -60,11 +79,12 @@
                                 <div class="d-flex flex-column">
                                     <div class="ms-2">{{ $row->name }}</div>
                                     <div class="ms-2">{{ $row->email }}</div>
-                                    <div class="ms-2">{{ $row->phone }}</div>
                                 </div>
                             </td>
 
                             <td>{{ $row->number_identity ?? '-' }}</td>
+
+                            <td>{{ $row->phone ?? '-' }}</td>
 
                             <td>{{ $row->address ?? '-' }}</td>
 
