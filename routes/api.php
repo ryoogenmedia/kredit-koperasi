@@ -21,5 +21,11 @@ Route::get('/', function(){
 # AUTHENTICATION
 require 'api/auth.php';
 
-#VERFICATION
+#VERFICATION / VERIFICATION
 require 'api/verification.php';
+
+#NASABAH
+require 'api/nasabah.php';
+
+#LOAN / PINJAMAN
+require 'api/loan.php';
