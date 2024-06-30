@@ -29,19 +29,19 @@ class UserTableSeeder extends Seeder
                 'roles' => 'admin',
             ],
             [
+                'username' => 'Hasrianti',
+                'email' => 'hasrianti252@gmail.com',
+                'email_verified_at' => now(),
+                'password' => bcrypt('hasrianti123'),
+                'roles' => 'admin',
+            ],
+            [
                 'username' => 'Hasrianti Operator',
-                'email' => 'hasrianti10@gmail.com',
+                'email' => 'anti252@gmail.com',
                 'email_verified_at' => now(),
                 'password' => bcrypt('hasrianti123'),
                 'roles' => 'operator',
             ],
-            [
-                'username' => 'Hasrianti',
-                'email' => 'hasrianti250@gmail.com',
-                'email_verified_at' => now(),
-                'password' => bcrypt('hasrianti123321'),
-                'roles' => 'user',
-            ]
         ];
 
         foreach($users as $user){
