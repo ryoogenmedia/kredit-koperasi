@@ -38,7 +38,7 @@ Route::middleware('auth', 'verified', 'force.logout')->namespace('App\Livewire')
     Route::namespace('Payment')->prefix('pembayaran')->name('payment.')->middleware('roles:operator')->group(function(){
         Route::redirect('/pembayaran', '/pembayaran/pinjaman');
         Route::get('/pinjaman', Loan::class)->name('loan');
-        Route::get('/angsuran', InstallMents::class)->name('installments');
+        Route::get('/angsuran', Installments::class)->name('installments');
     });
 
     /**
